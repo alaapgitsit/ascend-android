@@ -5,6 +5,10 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+permissions:
+  contents: read
+  issues: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -46,8 +50,16 @@ jobs:
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
 
-      - name: Fail if build failed
+      - name: Report failure as issue
         if: steps.build.outcome != 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          echo "::error::Gradle build failed — see the build-log artifact"
+          echo '```' > err.txt
+          grep -iE "e: |error:|FAILURE|What went wrong|Could not|Unresolved|Caused by|> Task|BUILD FAILED|Execution failed" build-output.log | tail -120 >> err.txt || true
+          echo '--- last 120 lines ---' >> err.txt
+          tail -120 build-output.log >> err.txt || echo "no build log" >> err.txt
+          echo '```' >> err.txt
+          head -c 60000 err.txt > errb.txt
+          gh issue create --title "buildlog ${{ github.run_id }}" --body-file errb.txt
           exit 1
