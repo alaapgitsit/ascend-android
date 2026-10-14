@@ -27,11 +27,30 @@ jobs:
           gradle-version: '8.9'
 
       - name: Build debug APK
-        run: gradle :app:assembleDebug --no-daemon --stacktrace
+        id: build
+        continue-on-error: true
+        run: |
+          set -o pipefail
+          gradle :app:assembleDebug --no-daemon --stacktrace 2>&1 | tee build-output.log
+
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: build-output.log
+          if-no-files-found: warn
 
       - name: Upload APK
+        if: steps.build.outcome == 'success'
         uses: actions/upload-artifact@v4
         with:
           name: ascend-debug-apk
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
+
+      - name: Fail if build failed
+        if: steps.build.outcome != 'success'
+        run: |
+          echo "::error::Gradle build failed — see the build-log artifact"
+          exit 1
