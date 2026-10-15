@@ -1,12 +1,18 @@
 package com.ascend.health
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
 import android.webkit.JavascriptInterface
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
+import androidx.core.view.updatePadding
 import androidx.health.connect.client.HealthConnectClient
 import androidx.health.connect.client.PermissionController
 import androidx.lifecycle.lifecycleScope
@@ -32,8 +38,22 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Keep content below the status bar / above the gesture bar (Android 15 is edge-to-edge by default)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
         webView = WebView(this)
+        webView.setBackgroundColor(Color.parseColor("#f3efe6"))
         setContentView(webView)
+
+        // Pad the WebView by the system bar insets so nothing hides under the notification bar.
+        ViewCompat.setOnApplyWindowInsetsListener(webView) { v, insets ->
+            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.updatePadding(top = bars.top, bottom = bars.bottom, left = bars.left, right = bars.right)
+            insets
+        }
+        // Dark status-bar icons to suit the light paper theme.
+        WindowInsetsControllerCompat(window, webView).isAppearanceLightStatusBars = true
 
         webView.settings.apply {
             javaScriptEnabled = true
@@ -46,11 +66,16 @@ class MainActivity : AppCompatActivity() {
         webView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 webReady = true
-                // auto-sync on open if we already have permission
                 autoSyncIfGranted()
             }
         }
         webView.loadUrl("file:///android_asset/ascend.html")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Always land on the Today tab when the app is reopened.
+        if (webReady) webView.evaluateJavascript("window.__ascendForceHome && window.__ascendForceHome();", null)
     }
 
     /** Called from JS: window.AndroidAscend.requestSync() */
@@ -120,7 +145,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @Suppress("DEPRECATION", "MissingSuperCall")
     override fun onBackPressed() {
-        if (webView.canGoBack()) webView.goBack() else super.onBackPressed()
+        if (!webReady) { moveTaskToBack(true); return }
+        // Ask the web app to handle back (close a sheet, or jump to Today).
+        webView.evaluateJavascript("(window.__ascendBack && window.__ascendBack())===true") { result ->
+            if (result == "true") {
+                // handled inside the app
+            } else {
+                // nothing to close and already on Today → minimise instead of exiting
+                moveTaskToBack(true)
+            }
+        }
     }
 }

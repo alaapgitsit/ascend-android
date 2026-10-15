@@ -60,19 +60,29 @@ object HealthReader {
             }
         } catch (_: Exception) {}
 
-        // Sleep (total + deep stages). Assign to the local date the session ENDS on.
+        // Sleep. Total = time actually ASLEEP (sum of sleep stages, excluding awake/out-of-bed);
+        // Deep = deep-stage time. Assign to the local date the session ENDS on.
+        val awakeStages = setOf(
+            SleepSessionRecord.STAGE_TYPE_AWAKE,
+            SleepSessionRecord.STAGE_TYPE_AWAKE_IN_BED,
+            SleepSessionRecord.STAGE_TYPE_OUT_OF_BED
+        )
         try {
             val res = client.readRecords(ReadRecordsRequest(SleepSessionRecord::class, timeRangeFilter = range))
             for (r in res.records) {
                 val k = dayKey(r.endTime, zone)
-                val totalH = (r.endTime.toEpochMilli() - r.startTime.toEpochMilli()) / 3600000.0
-                sleepHrs[k] = (sleepHrs[k] ?: 0.0) + totalH
+                var asleep = 0.0
                 var deep = 0.0
-                for (st in r.stages) {
-                    if (st.stage == SleepSessionRecord.STAGE_TYPE_DEEP) {
-                        deep += (st.endTime.toEpochMilli() - st.startTime.toEpochMilli()) / 3600000.0
+                if (r.stages.isNotEmpty()) {
+                    for (st in r.stages) {
+                        val h = (st.endTime.toEpochMilli() - st.startTime.toEpochMilli()) / 3600000.0
+                        if (st.stage !in awakeStages) asleep += h
+                        if (st.stage == SleepSessionRecord.STAGE_TYPE_DEEP) deep += h
                     }
+                } else {
+                    asleep = (r.endTime.toEpochMilli() - r.startTime.toEpochMilli()) / 3600000.0
                 }
+                if (asleep > 0) sleepHrs[k] = (sleepHrs[k] ?: 0.0) + asleep
                 if (deep > 0) deepHrs[k] = (deepHrs[k] ?: 0.0) + deep
             }
         } catch (_: Exception) {}
