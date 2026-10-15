@@ -10,14 +10,26 @@ android {
     defaultConfig {
         applicationId = "com.ascend.health"
         minSdk = 28
-        targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        // Target 34 so the app is NOT forced into Android-15 edge-to-edge:
+        // the window sits between the status bar and the nav bar and resizes automatically.
+        targetSdk = 34
+        versionCode = 2
+        versionName = "1.1"
+    }
+
+    signingConfigs {
+        create("ascend") {
+            storeFile = file("ascend-release.keystore")
+            storePassword = "ascend2026"
+            keyAlias = "ascend"
+            keyPassword = "ascend2026"
+        }
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("ascend")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

@@ -8,11 +8,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import androidx.core.view.updatePadding
 import androidx.health.connect.client.HealthConnectClient
 import androidx.health.connect.client.PermissionController
 import androidx.lifecycle.lifecycleScope
@@ -39,21 +35,15 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Keep content below the status bar / above the gesture bar (Android 15 is edge-to-edge by default)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-
         webView = WebView(this)
         webView.setBackgroundColor(Color.parseColor("#f3efe6"))
         setContentView(webView)
 
-        // Pad the WebView by the system bar insets so nothing hides under the notification bar.
-        ViewCompat.setOnApplyWindowInsetsListener(webView) { v, insets ->
-            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.updatePadding(top = bars.top, bottom = bars.bottom, left = bars.left, right = bars.right)
-            insets
+        // Dark status/nav-bar icons to suit the light paper theme.
+        WindowInsetsControllerCompat(window, webView).apply {
+            isAppearanceLightStatusBars = true
+            isAppearanceLightNavigationBars = true
         }
-        // Dark status-bar icons to suit the light paper theme.
-        WindowInsetsControllerCompat(window, webView).isAppearanceLightStatusBars = true
 
         webView.settings.apply {
             javaScriptEnabled = true
