@@ -13,8 +13,8 @@ android {
         // Target 34 so the app is NOT forced into Android-15 edge-to-edge:
         // the window sits between the status bar and the nav bar and resizes automatically.
         targetSdk = 34
-        versionCode = 2
-        versionName = "1.1"
+        versionCode = 3
+        versionName = "1.2"
     }
 
     signingConfigs {

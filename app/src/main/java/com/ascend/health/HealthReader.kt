@@ -92,21 +92,31 @@ object HealthReader {
         )
         try {
             val res = client.readRecords(ReadRecordsRequest(SleepSessionRecord::class, timeRangeFilter = range))
+            // Group sessions by the day they END on, then pick ONE session per day
+            // (prefer one with sleep stages, else the longest) so overlapping records
+            // from multiple sources — e.g. the ring AND the phone — are not double-counted.
+            val byDay = HashMap<String, MutableList<SleepSessionRecord>>()
             for (r in res.records) {
-                val k = dayKey(r.endTime, zone)
+                byDay.getOrPut(dayKey(r.endTime, zone)) { mutableListOf() }.add(r)
+            }
+            for ((k, list) in byDay) {
+                val best = list.maxWithOrNull(
+                    compareBy({ if (it.stages.isNotEmpty()) 1 else 0 },
+                              { it.endTime.toEpochMilli() - it.startTime.toEpochMilli() })
+                ) ?: continue
                 var asleep = 0.0
                 var deep = 0.0
-                if (r.stages.isNotEmpty()) {
-                    for (st in r.stages) {
+                if (best.stages.isNotEmpty()) {
+                    for (st in best.stages) {
                         val h = (st.endTime.toEpochMilli() - st.startTime.toEpochMilli()) / 3600000.0
                         if (st.stage !in awakeStages) asleep += h
                         if (st.stage == SleepSessionRecord.STAGE_TYPE_DEEP) deep += h
                     }
                 } else {
-                    asleep = (r.endTime.toEpochMilli() - r.startTime.toEpochMilli()) / 3600000.0
+                    asleep = (best.endTime.toEpochMilli() - best.startTime.toEpochMilli()) / 3600000.0
                 }
-                if (asleep > 0) sleepHrs[k] = (sleepHrs[k] ?: 0.0) + asleep
-                if (deep > 0) deepHrs[k] = (deepHrs[k] ?: 0.0) + deep
+                if (asleep > 0) sleepHrs[k] = asleep
+                if (deep > 0) deepHrs[k] = deep
             }
         } catch (_: Exception) {}
 
