@@ -398,6 +398,16 @@ hr.soft{border:0;border-top:1px solid var(--line);margin:18px 0}
 .fast-time{font-family:var(--font-display);font-weight:800;font-size:25px;color:var(--cyan);line-height:1.1;margin-top:3px;white-space:nowrap}
 .fast-ring.on .fast-time{color:var(--primary)}
 .fast-end{background:var(--surface-2)!important;border:1px solid var(--line)!important;color:var(--fg)!important}
+.fast-card.past{padding:14px 16px}
+.fast-past-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.fast-past-head span{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--faint);font-weight:800}
+.fast-past-head b{font-family:var(--font-display);font-weight:800;font-size:20px;color:var(--cyan)}
+.bp-log .bp-row{display:flex;align-items:flex-end;gap:10px}
+.bp-log label{flex:1;display:flex;flex-direction:column;gap:5px;min-width:0}
+.bp-log label span{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--faint);font-weight:800}
+.bp-log input{background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:12px;font-size:16px;text-align:center;color:var(--fg);color-scheme:light;width:100%;-moz-appearance:textfield}
+.bp-log input:focus{outline:0;border-color:var(--primary)}
+.bp-slash{font-family:var(--font-display);font-size:22px;color:var(--faint);padding-bottom:8px}
 .fast-times{display:flex;align-items:center;justify-content:center;gap:14px;margin:4px 0 12px;padding:11px 12px;
   background:var(--surface-2);border:1px solid var(--line);border-radius:12px}
 .fast-times.idle{opacity:.85}
@@ -703,7 +713,7 @@ function renderHome(){
     wBlock=`<div class="mini-empty">No workout logged${isToday?' yet':''}. <a data-goto="log">Log one →</a></div>`;
   }
   const meals=MEALS.map(m=>{const t=mealTotal(viewDate,m);return `<div class="meal-mini"><span>${m}</span><b class="tnum">${t==null?'–':t}</b></div>`;}).join("");
-  el.innerHTML=dateBar()+(isToday?fastCard():"")+`
+  el.innerHTML=dateBar()+(isToday?fastCard():pastFastCard(viewDate))+`
     <div class="cal-card">
       <div class="cal-top">
         <div class="cal-ring" style="--p:${pctCal}"><div class="cal-inner"><div class="cal-left tnum ${left<0?'over':''}">${Math.abs(left)}</div><div class="cal-sub">${left<0?'over':'left'}</div></div></div>
@@ -1083,9 +1093,24 @@ function renderGraphs(){
     <div class="section-title">Snapshot <span class="range-tag">${esc(rangeLabel())}</span></div>
     <div class="prog-grid">${trendSummary()}</div>
     <div class="foot-note">Showing ${esc(rangeLabel())}. Tap a range above, or Custom to pick dates.</div>
+    <div class="section-title">Log blood pressure <span class="range-tag">today</span></div>
+    <div class="card bp-log">
+      <div class="bp-row">
+        <label><span>Systolic</span><input type="number" inputmode="numeric" id="bpSys" placeholder="120" value="${bodyVal(Date.now(),'bps')!=null?bodyVal(Date.now(),'bps'):''}"></label>
+        <span class="bp-slash">/</span>
+        <label><span>Diastolic</span><input type="number" inputmode="numeric" id="bpDia" placeholder="80" value="${bodyVal(Date.now(),'bpd')!=null?bodyVal(Date.now(),'bpd'):''}"></label>
+      </div>
+      <button class="btn btn-primary btn-block" id="bpSave" style="margin-top:12px">Save today's reading</button>
+    </div>
   `;
   $$('.ex-pill',el).forEach(b=>b.addEventListener("click",()=>{graphMetric=b.dataset.m;renderGraphs();}));
   $$('.range-pill',el).forEach(b=>b.addEventListener("click",()=>{if(b.dataset.r==="custom")openCustomRange();else{graphRange=b.dataset.r;renderGraphs();}}));
+  const bpS=$("#bpSave",el);if(bpS)bpS.addEventListener('click',()=>{
+    const s=num($("#bpSys",el).value),d=num($("#bpDia",el).value);
+    if(s==null&&d==null){toast("Enter a reading");return;}
+    const k=dkey(Date.now());state.body[k]=state.body[k]||{};
+    if(s!=null)state.body[k].bps=Math.round(s);if(d!=null)state.body[k].bpd=Math.round(d);
+    save();toast("BP saved ✓");graphMetric="bp";renderGraphs();});
   drawTrend();
 }
 function trendSummary(){
@@ -1650,6 +1675,18 @@ function fastCard(){
       <div class="fast-ring ${active?'on':''}" id="fastRing" style="--p:${pct}"><div class="fast-inner"><div class="fast-lbl">${label}</div><div class="fast-time" id="fastTime">${fmtHM(h)}</div></div></div>
       <div class="fast-target">${active?`target<br>${target}h`:`goal<br>${target}:${24-target}`}</div>
     </div>${times}${btn}</div>`;
+}
+function fastsEndingOn(date){const k=dkey(date);return (state.fasting.history||[]).filter(f=>dkey(f.end)===k);}
+function pastFastCard(date){
+  const fs=fastsEndingOn(date);if(!fs.length)return "";
+  const f=fs.reduce((a,b)=>(b.end-b.start)>(a.end-a.start)?b:a);
+  const hrs=round1((f.end-f.start)/3600000);
+  return `<div class="fast-card past"><div class="fast-past-head"><span>Fasted this day</span><b>${fmtHM(hrs)}</b></div>
+    <div class="fast-times idle">
+      <div class="ft-col"><span>Started</span><b>${fmtClockDay(f.start)}</b></div>
+      <div class="ft-arrow">→</div>
+      <div class="ft-col"><span>Ended</span><b>${fmtClockDay(f.end)}</b></div>
+    </div></div>`;
 }
 function openFastProto(){
   const sheet=document.createElement("div");sheet.className="scrim";
