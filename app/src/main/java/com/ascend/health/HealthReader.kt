@@ -7,11 +7,14 @@ import androidx.health.connect.client.records.HeartRateVariabilityRmssdRecord
 import androidx.health.connect.client.records.SleepSessionRecord
 import androidx.health.connect.client.records.StepsRecord
 import androidx.health.connect.client.records.WeightRecord
+import androidx.health.connect.client.request.AggregateGroupByPeriodRequest
 import androidx.health.connect.client.request.ReadRecordsRequest
 import androidx.health.connect.client.time.TimeRangeFilter
 import org.json.JSONArray
 import org.json.JSONObject
 import java.time.Instant
+import java.time.LocalDateTime
+import java.time.Period
 import java.time.ZoneId
 import java.time.temporal.ChronoUnit
 
@@ -51,14 +54,34 @@ object HealthReader {
         val hrvCount = HashMap<String, Int>()
         val weightLatest = HashMap<String, Pair<Instant, Double>>()
 
-        // Steps
+        // Steps — aggregate per day (Health Connect dedupes across sources by the
+        // priority you set in Health Connect, e.g. RingConn above the phone).
         try {
-            val res = client.readRecords(ReadRecordsRequest(StepsRecord::class, timeRangeFilter = range))
-            for (r in res.records) {
-                val k = dayKey(r.startTime, zone)
-                steps[k] = (steps[k] ?: 0L) + r.count
+            val startL = LocalDateTime.ofInstant(start, zone)
+            val endL = LocalDateTime.ofInstant(end, zone)
+            val agg = client.aggregateGroupByPeriod(
+                AggregateGroupByPeriodRequest(
+                    metrics = setOf(StepsRecord.COUNT_TOTAL),
+                    timeRangeFilter = TimeRangeFilter.between(startL, endL),
+                    timeRangeSlicer = Period.ofDays(1)
+                )
+            )
+            for (g in agg) {
+                val c = g.result[StepsRecord.COUNT_TOTAL] ?: continue
+                val d = g.startTime.toLocalDate()
+                steps["%04d-%02d-%02d".format(d.year, d.monthValue, d.dayOfMonth)] = c
             }
         } catch (_: Exception) {}
+        // Fallback: raw sum if aggregation produced nothing
+        if (steps.isEmpty()) {
+            try {
+                val res = client.readRecords(ReadRecordsRequest(StepsRecord::class, timeRangeFilter = range))
+                for (r in res.records) {
+                    val k = dayKey(r.startTime, zone)
+                    steps[k] = (steps[k] ?: 0L) + r.count
+                }
+            } catch (_: Exception) {}
+        }
 
         // Sleep. Total = time actually ASLEEP (sum of sleep stages, excluding awake/out-of-bed);
         // Deep = deep-stage time. Assign to the local date the session ENDS on.
