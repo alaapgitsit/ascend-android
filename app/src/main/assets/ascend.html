@@ -129,7 +129,7 @@ main{flex:1 1 auto;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:
   text-wrap:balance;max-width:92%}
 .stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px}
 .stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px}
-.stat .k{font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--faint);font-weight:800}
+.stat .k{font-size:10px;letter-spacing:.4px;text-transform:uppercase;color:var(--faint);font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .stat .v{font-family:var(--font-display);font-weight:800;font-size:30px;line-height:1;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .stat .v small{font-size:14px;color:var(--muted);font-family:var(--font-ui);font-weight:700;margin-left:3px}
 .stat .v .flame{font-family:var(--font-ui)}
@@ -338,7 +338,7 @@ hr.soft{border:0;border-top:1px solid var(--line);margin:18px 0}
 .meal-mini b{font-size:16px;font-family:var(--font-display)}
 .snap-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 .snap{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px}
-.snap .k{font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--faint);font-weight:800}
+.snap .k{font-size:10px;letter-spacing:.4px;text-transform:uppercase;color:var(--faint);font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .snap .v{font-family:var(--font-display);font-weight:800;font-size:25px;margin-top:5px;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .snap .v small{font-size:13px;color:var(--muted);font-family:var(--font-ui);font-weight:700;margin-left:3px}
 .mini-row{display:flex;align-items:center;gap:12px;padding:5px 0}
@@ -719,9 +719,9 @@ function renderHome(){
     <div class="section-title">Body <button class="sync-btn" data-sync>⟳ Sync</button></div>
     <div class="snap-grid">
       <div class="snap"><div class="k">Weight</div><div class="v tnum">${lw.val!=null?round1(fromKg(lw.val)):'–'}<small>${unitLbl()}</small></div></div>
-      <div class="snap"><div class="k">Steps</div><div class="v tnum">${steps!=null?Number(steps).toLocaleString():'–'}</div></div>
-      <div class="snap"><div class="k">Deep sleep</div><div class="v tnum">${deep!=null?deep:'–'}<small>h</small></div></div>
-      <div class="snap"><div class="k">Total sleep</div><div class="v tnum">${sleep!=null?sleep:'–'}<small>h</small></div></div>
+      <div class="snap"><div class="k">Steps</div><div class="v tnum">${steps!=null?fmtNum(Number(steps)):'–'}</div></div>
+      <div class="snap"><div class="k">Deep sleep</div><div class="v tnum">${deep!=null?fmtNum(deep):'–'}<small>h</small></div></div>
+      <div class="snap"><div class="k">Total sleep</div><div class="v tnum">${sleep!=null?fmtNum(sleep):'–'}<small>h</small></div></div>
     </div>
     <div class="section-title">Training</div>
     <div class="card">${wBlock}<div class="streak-line">🔥 ${streak}-week streak · ${thisWeekCount()}/${state.settings.weeklyGoal} this week</div></div>
@@ -1442,10 +1442,10 @@ function renderBody(){
     <div class="sync-note">${isNativeApp()?"Pulled from Health Connect automatically each time you open Ascend — tap to refresh now.":"The installed app pulls steps, sleep, HRV &amp; weight from your ring automatically. In the browser you can import a Health Connect export here."}</div>
     <div class="section-title">Highlights</div>
     <div class="snap-grid">
-      <div class="snap"><div class="k">Weight</div><div class="v tnum">${wShow!=null?round1(fromKg(wShow)):'–'}<small>${unitLbl()}</small></div></div>
-      <div class="snap"><div class="k">Steps</div><div class="v tnum">${sv!=null?Number(sv).toLocaleString():'–'}</div></div>
-      <div class="snap"><div class="k">Deep sleep</div><div class="v tnum">${dv!=null?dv:'–'}<small>h</small></div></div>
-      <div class="snap"><div class="k">Total sleep</div><div class="v tnum">${tv!=null?tv:'–'}<small>h</small></div></div>
+      <div class="snap"><div class="k">Weight</div><div class="v tnum">${wShow!=null?fmtNum(round1(fromKg(wShow))):'–'}<small>${unitLbl()}</small></div></div>
+      <div class="snap"><div class="k">Steps</div><div class="v tnum">${sv!=null?fmtNum(Number(sv)):'–'}</div></div>
+      <div class="snap"><div class="k">Deep sleep</div><div class="v tnum">${dv!=null?fmtNum(dv):'–'}<small>h</small></div></div>
+      <div class="snap"><div class="k">Total sleep</div><div class="v tnum">${tv!=null?fmtNum(tv):'–'}<small>h</small></div></div>
     </div>
     <div class="section-title">Log for this day</div>
     <div class="card body-card">${rows}<button class="btn btn-primary btn-block" id="bodySave" style="margin-top:4px">Save body log</button></div>
