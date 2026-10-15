@@ -1,6 +1,5 @@
 <!doctype html>
-<html lang="en">
-<head>
+<html lang="en"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#f3efe6">
@@ -9,12 +8,12 @@
 <title>Ascend</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Archivo:wght@400;500;600;700;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
 /* ---- Ascend — "five/four" editorial identity ----
    Layout: full-height app shell — sticky top bar, scrolling main, bottom tab bar.
-   Color: warm paper base, vermillion red energy, gold + muted teal accents. Space Mono data / Archivo body. Committed light theme. */
+   Color: warm paper base, vermillion red energy, gold + muted teal accents. Clean Archivo display / Manrope body. Committed light theme. */
 :root{
   color-scheme: light;
   --bg:#f3efe6;
@@ -34,8 +33,8 @@
   --danger:#cc2a16;
   --grad:linear-gradient(135deg,#ff3a22 0%,#ff6a55 100%);
   --grad-cyan:linear-gradient(135deg,#628078 0%,#4d6b61 100%);
-  --font-display:"Space Mono","Courier New",monospace;
-  --font-ui:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-display:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-ui:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
   --r:12px;
   --shadow:0 10px 28px rgba(60,40,10,.14);
 }
@@ -51,6 +50,7 @@ input::placeholder,textarea::placeholder{color:var(--faint)}
 ::-webkit-scrollbar{width:9px;height:9px}
 ::-webkit-scrollbar-thumb{background:var(--surface-3);border-radius:9px}
 .tnum{font-variant-numeric:tabular-nums}
+[class*="-ring"] *,.ring span,.cal-left,.fast-time,.stat .v,.snap .v,.v.tnum{font-variant-numeric:tabular-nums;letter-spacing:-.3px}
 
 /* ---------- shell ---------- */
 #app{display:flex;flex-direction:column;height:100%;max-width:560px;margin:0 auto;position:relative}
@@ -124,7 +124,7 @@ main{flex:1 1 auto;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:
 .stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:14px}
 .stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px}
 .stat .k{font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--faint);font-weight:800}
-.stat .v{font-family:var(--font-display);font-weight:400;font-size:34px;line-height:1;margin-top:6px}
+.stat .v{font-family:var(--font-display);font-weight:800;font-size:30px;line-height:1;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .stat .v small{font-size:14px;color:var(--muted);font-family:var(--font-ui);font-weight:700;margin-left:3px}
 .stat .v .flame{font-family:var(--font-ui)}
 .stat.accent .v{color:var(--primary)}
@@ -134,7 +134,7 @@ main{flex:1 1 auto;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:
 .ring{--p:0;width:58px;height:58px;flex:0 0 auto;border-radius:50%;
   background:conic-gradient(var(--primary) calc(var(--p)*1%),var(--surface-3) 0);display:grid;place-items:center}
 .ring::before{content:"";position:absolute;width:44px;height:44px;border-radius:50%;background:var(--surface)}
-.ring span{position:relative;font-family:var(--font-display);font-size:18px}
+.ring span{position:relative;font-family:var(--font-display);font-weight:800;font-size:17px;line-height:1}
 .ringbox{position:relative;width:58px;height:58px;display:grid;place-items:center}
 
 .week-dots{display:flex;justify-content:space-between;gap:6px;margin-top:4px}
@@ -312,8 +312,8 @@ hr.soft{border:0;border-top:1px solid var(--line);margin:18px 0}
 .cal-card.compact{padding:14px;margin-bottom:16px}
 .cal-top{display:flex;align-items:center;gap:16px}
 .cal-ring{--p:0;position:relative;width:98px;height:98px;flex:0 0 auto;border-radius:50%;background:conic-gradient(var(--primary) calc(var(--p)*1%),var(--surface-3) 0);display:grid;place-items:center}
-.cal-inner{width:78px;height:78px;border-radius:50%;background:var(--surface);display:grid;place-items:center;text-align:center}
-.cal-left{font-family:var(--font-display);font-size:25px;line-height:1;letter-spacing:-.5px;color:var(--primary);max-width:100%;overflow:hidden}
+.cal-inner{width:80px;height:80px;border-radius:50%;background:var(--surface);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 6px;overflow:hidden}
+.cal-left{font-family:var(--font-display);font-weight:800;font-size:22px;line-height:1;letter-spacing:-.5px;color:var(--primary);max-width:100%;overflow:hidden;white-space:nowrap}
 .cal-inner{overflow:hidden}
 .cal-left.over{color:var(--danger)}
 .cal-sub{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--faint);font-weight:800;margin-top:2px}
@@ -333,7 +333,7 @@ hr.soft{border:0;border-top:1px solid var(--line);margin:18px 0}
 .snap-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
 .snap{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px}
 .snap .k{font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--faint);font-weight:800}
-.snap .v{font-family:var(--font-display);font-size:27px;margin-top:5px;line-height:1}
+.snap .v{font-family:var(--font-display);font-weight:800;font-size:25px;margin-top:5px;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .snap .v small{font-size:13px;color:var(--muted);font-family:var(--font-ui);font-weight:700;margin-left:3px}
 .mini-row{display:flex;align-items:center;gap:12px;padding:5px 0}
 .mini-ic{width:40px;height:40px;flex:0 0 auto;border-radius:11px;display:grid;place-items:center;background:var(--surface-2)}
@@ -387,9 +387,9 @@ hr.soft{border:0;border-top:1px solid var(--line);margin:18px 0}
 .fast-target{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--faint);font-weight:800;text-align:right;min-width:48px;line-height:1.4}
 .fast-ring{--p:0;position:relative;width:138px;height:138px;flex:0 0 auto;border-radius:50%;background:var(--surface-3);display:grid;place-items:center}
 .fast-ring.on{background:conic-gradient(var(--primary) calc(var(--p)*1%),var(--surface-3) 0)}
-.fast-inner{width:112px;height:112px;border-radius:50%;background:var(--surface);display:grid;place-items:center;text-align:center}
+.fast-inner{width:114px;height:114px;border-radius:50%;background:var(--surface);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 10px;overflow:hidden}
 .fast-lbl{font-size:10px;letter-spacing:1.3px;text-transform:uppercase;color:var(--faint);font-weight:800}
-.fast-time{font-family:var(--font-display);font-size:27px;color:var(--cyan);line-height:1.1;margin-top:3px}
+.fast-time{font-family:var(--font-display);font-weight:800;font-size:25px;color:var(--cyan);line-height:1.1;margin-top:3px;white-space:nowrap}
 .fast-ring.on .fast-time{color:var(--primary)}
 .fast-end{background:var(--surface-2)!important;border:1px solid var(--line)!important;color:var(--fg)!important}
 .fast-times{display:flex;align-items:center;justify-content:center;gap:14px;margin:4px 0 12px;padding:11px 12px;
@@ -442,8 +442,7 @@ hr.soft{border:0;border-top:1px solid var(--line);margin:18px 0}
 .sync-btn:active{transform:scale(.95)}
 .sync-note{font-size:11px;color:var(--faint);font-weight:700;margin:8px 2px 14px;line-height:1.5}
 </style>
-</head>
-<body>
+</head><body>
 
 
 <div id="app">
@@ -1625,5 +1624,4 @@ renderHome();
 if(session){setTimeout(()=>toast("Restored your in-progress workout — open Log"),500);}
 </script>
 
-</body>
-</html>
+</body></html>
