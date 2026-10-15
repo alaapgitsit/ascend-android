@@ -50,6 +50,12 @@ input::placeholder,textarea::placeholder{color:var(--faint)}
 ::-webkit-scrollbar{width:9px;height:9px}
 ::-webkit-scrollbar-thumb{background:var(--surface-3);border-radius:9px}
 .tnum{font-variant-numeric:tabular-nums}
+.range-row{display:flex;gap:6px;margin:10px 0 2px}
+.range-pill{flex:1;background:var(--surface);border:1px solid var(--line);border-radius:9px;padding:8px 4px;font-weight:800;font-size:12px;color:var(--muted)}
+.range-pill.active{background:var(--primary);border-color:var(--primary);color:#fff}
+.range-pill:active{transform:scale(.97)}
+.range-tag{font-family:var(--font-ui);font-size:10.5px;font-weight:700;color:var(--faint);text-transform:none;letter-spacing:0;margin-left:6px}
+.goal-row input[type=date]{color-scheme:light}
 [class*="-ring"] *,.ring span,.cal-left,.fast-time,.stat .v,.snap .v,.v.tnum{font-variant-numeric:tabular-nums;letter-spacing:-.3px}
 
 /* ---------- shell ---------- */
@@ -659,7 +665,7 @@ function totalVolumeKg(){return state.workouts.reduce((a,w)=>a+workoutVolumeKg(w
 /* ========================= rendering ========================= */
 const $=(s,r=document)=>r.querySelector(s);
 const $$=(s,r=document)=>[...r.querySelectorAll(s)];
-let activeTab="home", session=null, graphExercise=null, chart=null, viewDate=startOfDay(Date.now()), graphMetric="weight";
+let activeTab="home", session=null, graphExercise=null, chart=null, viewDate=startOfDay(Date.now()), graphMetric="weight", graphRange="week", graphCustom={from:null,to:null};
 
 function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
 
@@ -1032,6 +1038,33 @@ function cardioDaily(mode){
   return Object.keys(dd).filter(k=>dd[k]>0&&du[k]!=null).sort().map(k=>({date:k,val:round1(du[k]/dd[k])}));
 }
 function fastingSeries(){return (state.fasting.history||[]).map(f=>({date:dkey(f.end),val:round1((f.end-f.start)/3600000)})).sort((a,b)=>a.date<b.date?-1:1);}
+const RANGES=[["week","1W"],["month","1M"],["q","3M"],["year","1Y"],["custom","Custom"]];
+function rangeBounds(){
+  const today=dkey(Date.now());
+  if(graphRange==="custom")return {from:graphCustom.from,to:graphCustom.to||today};
+  const days={week:7,month:30,q:90,year:365}[graphRange]||7;
+  return {from:dkey(startOfDay(Date.now())-((days-1)*864e5)),to:today};
+}
+function filterRange(pts){const b=rangeBounds();
+  return pts.filter(p=>(!b.from||p.date>=b.from)&&(!b.to||p.date<=b.to));}
+function rangeLabel(){
+  const names={week:"last 7 days",month:"last 30 days",q:"last 3 months",year:"last year"};
+  if(graphRange==="custom"){const b=rangeBounds();return (b.from||"start")+" → "+(b.to||"today");}
+  return names[graphRange]||"";
+}
+function openCustomRange(){
+  const sheet=document.createElement("div");sheet.className="scrim";
+  sheet.innerHTML=`<div class="sheet"><div class="grab"></div><h2>Custom range</h2>
+    <div class="goal-row"><label>From</label><input type="date" id="rFrom" value="${graphCustom.from||''}"></div>
+    <div class="goal-row"><label>To</label><input type="date" id="rTo" value="${graphCustom.to||dkey(Date.now())}"></div>
+    <button class="btn btn-primary btn-block" id="rApply" style="margin-top:14px">Apply</button>
+    <button class="btn btn-ghost btn-block" id="rCancel" style="margin-top:8px;color:var(--faint)">Cancel</button></div>`;
+  document.body.appendChild(sheet);const close=()=>sheet.remove();
+  sheet.addEventListener('click',e=>{if(e.target===sheet)close();});
+  $("#rCancel",sheet).addEventListener('click',close);
+  $("#rApply",sheet).addEventListener('click',()=>{const f=$("#rFrom",sheet).value,t=$("#rTo",sheet).value;
+    graphCustom={from:f||null,to:t||null};graphRange="custom";close();renderGraphs();});
+}
 function renderGraphs(){
   const el=$("#tab-graphs");
   const exNames=allExerciseNames().filter(n=>seriesFor(n).length>0);
@@ -1040,16 +1073,18 @@ function renderGraphs(){
   el.innerHTML=`
     <div class="section-title">Trends</div>
     <div class="ex-pills">${metricPills}${exPills}</div>
+    <div class="range-row">${RANGES.map(r=>`<button class="range-pill ${graphRange===r[0]?'active':''}" data-r="${r[0]}">${r[1]}</button>`).join("")}</div>
     <div class="chart-card"><div class="chart-wrap"><canvas id="chart"></canvas></div></div>
-    <div class="section-title">Snapshot</div>
+    <div class="section-title">Snapshot <span class="range-tag">${esc(rangeLabel())}</span></div>
     <div class="prog-grid">${trendSummary()}</div>
-    <div class="foot-note">Charts blend your 3 years of MyNetDiary history with everything you log here.</div>
+    <div class="foot-note">Showing ${esc(rangeLabel())}. Tap a range above, or Custom to pick dates.</div>
   `;
   $$('.ex-pill',el).forEach(b=>b.addEventListener("click",()=>{graphMetric=b.dataset.m;renderGraphs();}));
+  $$('.range-pill',el).forEach(b=>b.addEventListener("click",()=>{if(b.dataset.r==="custom")openCustomRange();else{graphRange=b.dataset.r;renderGraphs();}}));
   drawTrend();
 }
 function trendSummary(){
-  return METRICS.map(m=>{const pts=metricPoints(m.k);if(!pts.length)return "";
+  return METRICS.map(m=>{const pts=filterRange(metricPoints(m.k));if(!pts.length)return "";
     const last=pts[pts.length-1].val, first=pts[0].val, d=round1(last-first);
     const lowerBetter=(m.k==="weight"||m.k==="waist"||m.k==="hip"||m.k==="kcal"||m.k==="cardioPace"||m.k==="bps");
     const cls=d===0?'flat':((d<0)===lowerBetter?'up':'down');
@@ -1063,6 +1098,7 @@ function drawTrend(){
   if(graphMetric.indexOf("ex:")===0){const n=graphMetric.slice(3);const s=seriesFor(n);
     pts=s.map(p=>({date:p.date,val:round1(fromKg(p.kg))}));label=n;unit=unitLbl();color="#628078";}
   else{const m=METRICS.find(x=>x.k===graphMetric)||METRICS[0];pts=metricPoints(m.k);label=m.label;unit=m.unit();color=m.color;}
+  pts=filterRange(pts);
   const labels=pts.map(p=>p.date), data=pts.map(p=>p.val);
   if(chart)chart.destroy();
   const ctx=cv.getContext("2d");
