@@ -612,6 +612,10 @@ function fromKg(v){return U()==="lb"? v*LB_PER_KG : v;}
 function unitLbl(){return U();}
 function num(x){const n=parseFloat(x);return isFinite(n)?n:null;}
 function round1(n){return Math.round(n*10)/10;}
+function fmtNum(v){if(v==null||typeof v!=="number"||!isFinite(v))return v;
+  const r=Math.round(v*10)/10;
+  return Number.isInteger(r)?r.toLocaleString(undefined,{maximumFractionDigits:0})
+    :r.toLocaleString(undefined,{minimumFractionDigits:1,maximumFractionDigits:1});}
 
 /* ---------- date helpers ---------- */
 function startOfDay(d){const x=new Date(d);x.setHours(0,0,0,0);return x;}
@@ -1088,8 +1092,8 @@ function trendSummary(){
     const last=pts[pts.length-1].val, first=pts[0].val, d=round1(last-first);
     const lowerBetter=(m.k==="weight"||m.k==="waist"||m.k==="hip"||m.k==="kcal"||m.k==="cardioPace"||m.k==="bps");
     const cls=d===0?'flat':((d<0)===lowerBetter?'up':'down');
-    const arrow=d>0?`▲ ${Math.abs(d)}`:d<0?`▼ ${Math.abs(d)}`:'—';
-    return `<div class="prog-item"><div class="nm">${m.label}</div><div class="bw tnum">${last.toLocaleString?last.toLocaleString():last}<small> ${m.unit()}</small></div><div class="chg ${cls}">${arrow}</div></div>`;
+    const arrow=d>0?`▲ ${fmtNum(Math.abs(d))}`:d<0?`▼ ${fmtNum(Math.abs(d))}`:'—';
+    return `<div class="prog-item"><div class="nm">${m.label}</div><div class="bw tnum">${fmtNum(last)}<small> ${m.unit()}</small></div><div class="chg ${cls}">${arrow}</div></div>`;
   }).join("");
 }
 function drawTrend(){
@@ -1110,11 +1114,11 @@ function drawTrend(){
     pointBackgroundColor:color,pointBorderColor:"#ffffff",pointBorderWidth:1.5}]},
     options:{responsive:true,maintainAspectRatio:false,animation:false,
       plugins:{legend:{display:false},tooltip:{backgroundColor:"#191714",borderColor:"#3a3630",borderWidth:1,
-        titleColor:"#ffffff",bodyColor:"#e4dfd2",padding:10,callbacks:{label:c=>` ${c.parsed.y} ${unit}`}}},
+        titleColor:"#ffffff",bodyColor:"#e4dfd2",padding:10,callbacks:{label:c=>` ${fmtNum(c.parsed.y)} ${unit}`}}},
       scales:{x:{grid:{color:"rgba(60,40,10,.10)"},ticks:{color:"#9b937f",font:{family:"Archivo",weight:"700",size:10},
         maxRotation:0,autoSkip:true,maxTicksLimit:7,callback:function(v){const l=this.getLabelForValue(v);return l?String(l).slice(5):l;}}},
         y:{grid:{color:"rgba(60,40,10,.10)"},ticks:{color:"#6c6454",font:{family:"Archivo",weight:"700",size:10},
-          callback:v=>v+(unit||"")},grace:"6%"}}}});
+          precision:1,callback:v=>fmtNum(v)+(unit||"")},grace:"6%"}}}});
 }
 
 /* ---- file saving: works inside the sandboxed artifact (downloads capability)
