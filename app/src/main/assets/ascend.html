@@ -1019,16 +1019,17 @@ const METRICS=[
   {k:"chest",label:"Chest",unit:()=>"cm",color:"#a4893d"},
   {k:"cardioDist",label:"Cardio km",unit:()=>"km",color:"#628078"},
   {k:"cardioPace",label:"Cardio pace",unit:()=>"/km",color:"#a4893d"},
-  {k:"bps",label:"BP systolic",unit:()=>"mmHg",color:"#ff3a22"},
+  {k:"bp",label:"Blood pressure",unit:()=>"mmHg",color:"#ff3a22",bp:true},
   {k:"jab",label:"Jab",unit:()=>"mg",color:"#a4893d"},
   {k:"hrv",label:"HRV",unit:()=>"ms",color:"#628078"},
-  {k:"fast",label:"Fasting h",unit:()=>"h",color:"#c7af6b"}
+  {k:"fast",label:"Fasting Hours",unit:()=>"h",color:"#c7af6b"}
 ];
 function metricPoints(k){
   if(k==="kcal")return kcalDaily();
   if(k==="cardioDist")return cardioDaily("dist");
   if(k==="cardioPace")return cardioDaily("pace");
   if(k==="fast")return fastingSeries();
+  if(k==="bp")return mergedDaily("bps");
   const m=METRICS.find(x=>x.k===k);const s=mergedDaily(k);
   return (m&&m.conv)? s.map(p=>({date:p.date,val:m.conv(p.val)})) : s;
 }
@@ -1088,16 +1089,38 @@ function renderGraphs(){
   drawTrend();
 }
 function trendSummary(){
-  return METRICS.map(m=>{const pts=filterRange(metricPoints(m.k));if(!pts.length)return "";
+  return METRICS.map(m=>{
+    if(m.k==="bp"){const sys=filterRange(mergedDaily("bps")),dia=filterRange(mergedDaily("bpd"));if(!sys.length)return "";
+      const ls=sys[sys.length-1].val,ld=dia.length?dia[dia.length-1].val:null,dd=round1(ls-sys[0].val);
+      const bcls=dd===0?'flat':(dd<0?'up':'down');const barrow=dd>0?`▲ ${fmtNum(Math.abs(dd))}`:dd<0?`▼ ${fmtNum(Math.abs(dd))}`:'—';
+      return `<div class="prog-item"><div class="nm">Blood pressure</div><div class="bw tnum">${fmtNum(ls)}${ld!=null?'/'+fmtNum(ld):''}<small> mmHg</small></div><div class="chg ${bcls}">${barrow}</div></div>`;}
+    const pts=filterRange(metricPoints(m.k));if(!pts.length)return "";
     const last=pts[pts.length-1].val, first=pts[0].val, d=round1(last-first);
-    const lowerBetter=(m.k==="weight"||m.k==="waist"||m.k==="hip"||m.k==="kcal"||m.k==="cardioPace"||m.k==="bps");
+    const lowerBetter=(m.k==="weight"||m.k==="waist"||m.k==="hip"||m.k==="kcal"||m.k==="cardioPace"||m.k==="bp");
     const cls=d===0?'flat':((d<0)===lowerBetter?'up':'down');
     const arrow=d>0?`▲ ${fmtNum(Math.abs(d))}`:d<0?`▼ ${fmtNum(Math.abs(d))}`:'—';
     return `<div class="prog-item"><div class="nm">${m.label}</div><div class="bw tnum">${fmtNum(last)}<small> ${m.unit()}</small></div><div class="chg ${cls}">${arrow}</div></div>`;
   }).join("");
 }
+function drawBP(){
+  const cv=$("#chart");if(!cv||!window.Chart)return;
+  const sys=filterRange(mergedDaily("bps")),dia=filterRange(mergedDaily("bpd"));
+  const dates=[...new Set(sys.map(p=>p.date).concat(dia.map(p=>p.date)))].sort();
+  const mS={},mD={};sys.forEach(p=>mS[p.date]=p.val);dia.forEach(p=>mD[p.date]=p.val);
+  const dataS=dates.map(d=>d in mS?mS[d]:null),dataD=dates.map(d=>d in mD?mD[d]:null);
+  if(chart)chart.destroy();const ctx=cv.getContext("2d");
+  chart=new Chart(ctx,{type:"line",data:{labels:dates,datasets:[
+    {data:dataS,label:"Systolic",borderColor:"#ff3a22",borderWidth:2.5,tension:.25,fill:false,spanGaps:true,pointRadius:3,pointHoverRadius:5,pointBackgroundColor:"#ff3a22",pointBorderColor:"#ffffff",pointBorderWidth:1.5},
+    {data:dataD,label:"Diastolic",borderColor:"#628078",borderWidth:2.5,tension:.25,fill:false,spanGaps:true,pointRadius:3,pointHoverRadius:5,pointBackgroundColor:"#628078",pointBorderColor:"#ffffff",pointBorderWidth:1.5}]},
+    options:{responsive:true,maintainAspectRatio:false,animation:false,
+      plugins:{legend:{display:true,labels:{color:"#6c6454",font:{family:"Archivo",weight:"700",size:11},boxWidth:14,boxHeight:3}},
+        tooltip:{backgroundColor:"#191714",borderColor:"#3a3630",borderWidth:1,titleColor:"#ffffff",bodyColor:"#e4dfd2",padding:10,callbacks:{label:c=>` ${c.dataset.label}: ${fmtNum(c.parsed.y)} mmHg`}}},
+      scales:{x:{grid:{color:"rgba(60,40,10,.10)"},ticks:{color:"#9b937f",font:{family:"Archivo",weight:"700",size:10},maxRotation:0,autoSkip:true,maxTicksLimit:7,callback:function(v){const l=this.getLabelForValue(v);return l?String(l).slice(5):l;}}},
+        y:{grid:{color:"rgba(60,40,10,.10)"},ticks:{color:"#6c6454",font:{family:"Archivo",weight:"700",size:10},callback:v=>fmtNum(v)},grace:"8%"}}}});
+}
 function drawTrend(){
   const cv=$("#chart");if(!cv||!window.Chart)return;
+  if(graphMetric==="bp"){drawBP();return;}
   let pts,label,unit,color;
   if(graphMetric.indexOf("ex:")===0){const n=graphMetric.slice(3);const s=seriesFor(n);
     pts=s.map(p=>({date:p.date,val:round1(fromKg(p.kg))}));label=n;unit=unitLbl();color="#628078";}
@@ -1231,6 +1254,7 @@ function setTab(tab){
   activeTab=tab;
   $$('.nav-btn').forEach(b=>b.classList.toggle("active",b.dataset.tab===tab));
   ["home","food","log","body","graphs"].forEach(t=>{const e=$("#tab-"+t);if(e)e.hidden=(t!==tab);});
+  if(tab==="home")viewDate=startOfDay(Date.now());
   $("#main").scrollTop=0;
   renderActive();
 }
