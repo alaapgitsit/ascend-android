@@ -1,13 +1,18 @@
 package com.ascend.health
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
 import android.webkit.JavascriptInterface
+import android.webkit.PermissionRequest
+import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.health.connect.client.HealthConnectClient
 import androidx.health.connect.client.PermissionController
@@ -18,6 +23,18 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var webView: WebView
     private var webReady = false
+
+    // Holds the web page's camera request while we ask for the Android runtime permission.
+    private var pendingCameraRequest: PermissionRequest? = null
+    private val cameraPermLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+            val req = pendingCameraRequest
+            pendingCameraRequest = null
+            if (req != null) runOnUiThread {
+                if (granted) req.grant(req.resources) else req.deny()
+            }
+            if (!granted) toastJs("Camera permission is needed to scan barcodes")
+        }
 
     // Health Connect permission launcher
     private val permissionLauncher =
@@ -53,6 +70,26 @@ class MainActivity : AppCompatActivity() {
             mediaPlaybackRequiresUserGesture = false
         }
         webView.addJavascriptInterface(Bridge(), "AndroidAscend")
+        // Grant the barcode scanner access to the camera.
+        webView.webChromeClient = object : WebChromeClient() {
+            override fun onPermissionRequest(request: PermissionRequest) {
+                val wantsCamera = request.resources.any {
+                    it == PermissionRequest.RESOURCE_VIDEO_CAPTURE
+                }
+                if (!wantsCamera) { runOnUiThread { request.deny() }; return }
+                runOnUiThread {
+                    if (ContextCompat.checkSelfPermission(
+                            this@MainActivity, Manifest.permission.CAMERA
+                        ) == PackageManager.PERMISSION_GRANTED
+                    ) {
+                        request.grant(request.resources)
+                    } else {
+                        pendingCameraRequest = request
+                        cameraPermLauncher.launch(Manifest.permission.CAMERA)
+                    }
+                }
+            }
+        }
         webView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 webReady = true

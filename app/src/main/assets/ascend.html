@@ -367,6 +367,14 @@ hr.soft{border:0;border-top:1px solid var(--line);margin:18px 0}
 .hist-note{background:rgba(98,128,120,.08);border:1px solid rgba(98,128,120,.25);color:var(--cyan);border-radius:12px;padding:11px 13px;font-size:12.5px;font-weight:700;margin-bottom:12px;line-height:1.5}
 .food-search{width:100%;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:13px 14px;font-size:16px;color:var(--fg)}
 .food-search:focus{outline:0;border-color:var(--primary)}
+.btn-scan{background:var(--surface-2);border:1px solid var(--line);color:var(--fg);display:flex;align-items:center;justify-content:center;gap:9px;margin-bottom:12px;font-weight:600}
+.btn-scan:active{border-color:var(--primary)}
+.scan-ico{font-size:18px;color:var(--primary);line-height:1}
+.scan-stage{position:relative;width:100%;aspect-ratio:4/3;max-height:46vh;background:#000;border-radius:14px;overflow:hidden;margin-top:4px}
+.scan-stage video{width:100%;height:100%;object-fit:cover;display:block}
+.scan-frame{position:absolute;inset:16% 12%;border:2px solid rgba(255,255,255,.9);border-radius:12px;box-shadow:0 0 0 2000px rgba(0,0,0,.28)}
+.scan-status{margin-top:12px;font-size:14px;color:var(--muted);text-align:center;min-height:20px}
+.scan-sheet #scanManual{flex:1}
 .food-results{margin-top:10px;max-height:40vh;overflow-y:auto;display:flex;flex-direction:column;gap:6px}
 .food-opt{display:flex;align-items:center;gap:10px;background:var(--surface-2);border:1px solid var(--line);border-radius:11px;padding:10px 12px;text-align:left;color:var(--fg)}
 .food-opt:active{border-color:var(--primary)}
@@ -459,8 +467,6 @@ hr.soft{border:0;border-top:1px solid var(--line);margin:18px 0}
 .sync-btn:active{transform:scale(.95)}
 .sync-note{font-size:11px;color:var(--faint);font-weight:700;margin:8px 2px 14px;line-height:1.5}
 </style>
-</head><body>
-
 
 <div id="app">
   <header id="topbar">
@@ -1395,6 +1401,7 @@ function openAddFood(meal){
   const sheet=document.createElement("div");sheet.className="scrim";
   sheet.innerHTML=`<div class="sheet"><div class="grab"></div>
     <h2>Add to ${meal}</h2>
+    <button class="btn btn-scan btn-block" id="scanBtn"><span class="scan-ico">▣</span> Scan barcode</button>
     <input class="food-search" id="foodSearch" placeholder="Search your foods…" autocomplete="off">
     <div class="food-results" id="foodResults"></div>
     <div class="section-title" style="margin-top:16px">Quick custom</div>
@@ -1420,6 +1427,7 @@ function openAddFood(meal){
   };
   draw("");
   $("#foodSearch",sheet).addEventListener('input',e=>draw(e.target.value));
+  $("#scanBtn",sheet).addEventListener('click',()=>openScanner(meal,sheet,close,draw));
   $("#cfAdd",sheet).addEventListener('click',()=>{
     const n=($("#cfName",sheet).value||"").trim();const k=num($("#cfKcal",sheet).value);
     if(!n||k==null){toast("Name and calories needed");return;}
@@ -1448,6 +1456,112 @@ function showPortion(food,meal,sheet,close,draw){
   $("#portionAdd",sheet).addEventListener('click',()=>{const q=getq();const c=calc(q);
     const amt=(q===1?(food.a||''):(q+"× "+(food.a||'serving')));
     addFood(viewDate,meal,{n:food.n,a:amt,k:c.k,p:c.p,c:c.c,f:c.f});toast("Added "+food.n);close();renderFood();});
+}
+// ---- Barcode scanner → Open Food Facts lookup --------------------------
+let _zxingP=null;
+function loadZXing(){
+  if(window.ZXingBrowser||window.ZXing)return Promise.resolve();
+  if(_zxingP)return _zxingP;
+  _zxingP=new Promise((res,rej)=>{
+    const s=document.createElement('script');
+    s.src="https://cdn.jsdelivr.net/npm/@zxing/browser@0.1.5/umd/zxing-browser.min.js";
+    s.onload=()=>res();s.onerror=()=>rej(new Error("zxing"));
+    document.head.appendChild(s);
+  });
+  return _zxingP;
+}
+function offLookup(code){
+  const url="https://world.openfoodfacts.org/api/v2/product/"+encodeURIComponent(code)+
+    ".json?fields=product_name,brands,nutriments,serving_size,quantity";
+  return fetch(url,{headers:{'Accept':'application/json'}}).then(r=>r.json()).then(j=>{
+    if(!j||j.status!==1||!j.product)return null;
+    const p=j.product,nu=p.nutriments||{};
+    // Prefer per-serving values if present, else per-100g.
+    const servTxt=(p.serving_size||'').trim();
+    const hasServ=nu['energy-kcal_serving']!=null||nu.proteins_serving!=null;
+    const pick=(base)=>{
+      const sv=nu[base+'_serving'], h=nu[base+'_100g'];
+      return (hasServ&&sv!=null)?+sv:(h!=null?+h:0);
+    };
+    let k=pick('energy-kcal');
+    if(!k){const ej=hasServ&&nu['energy-kj_serving']!=null?+nu['energy-kj_serving']:(nu['energy-kj_100g']!=null?+nu['energy-kj_100g']:0);if(ej)k=ej/4.184;}
+    const name=(p.product_name||'').trim()||('Barcode '+code);
+    const brand=(p.brands||'').split(',')[0].trim();
+    const amt=hasServ&&servTxt?servTxt:(nu['energy-kcal_serving']!=null?servTxt:'100 g');
+    return {
+      n:brand?name+' ('+brand+')':name,
+      a:amt||'1 serving',
+      k:Math.round(k),
+      p:round1(+pick('proteins')||0),
+      c:round1(+pick('carbohydrates')||0),
+      f:round1(+pick('fat')||0)
+    };
+  });
+}
+function openScanner(meal,addSheet,closeAdd,draw){
+  const native=!!(window.AndroidAscend&&window.AndroidAscend.isNativeAvailable);
+  const sheet=document.createElement("div");sheet.className="scrim";
+  sheet.innerHTML=`<div class="sheet scan-sheet"><div class="grab"></div>
+    <h2>Scan barcode</h2>
+    <div class="scan-stage"><video id="scanVid" playsinline muted></video><div class="scan-frame"></div></div>
+    <div class="scan-status" id="scanStatus">Point the camera at the barcode…</div>
+    <div class="section-title" style="margin-top:14px">Or enter the barcode</div>
+    <div class="cf-row"><input id="scanManual" inputmode="numeric" placeholder="e.g. 5000159484695"><button class="btn btn-primary" id="scanLook" style="width:auto;padding:0 18px">Look up</button></div>
+    <button class="btn btn-ghost btn-block" id="scanClose" style="margin-top:10px;color:var(--faint)">Cancel</button>
+  </div>`;
+  document.body.appendChild(sheet);
+  const vid=$("#scanVid",sheet),status=$("#scanStatus",sheet);
+  let stream=null,detector=null,raf=null,zxCtrl=null,done=false;
+  const stop=()=>{try{if(raf)cancelAnimationFrame(raf);}catch(e){}
+    try{if(zxCtrl&&zxCtrl.stop)zxCtrl.stop();}catch(e){}
+    try{if(stream)stream.getTracks().forEach(t=>t.stop());}catch(e){}};
+  const close=()=>{stop();sheet.remove();};
+  sheet.addEventListener('click',e=>{if(e.target===sheet)close();});
+  $("#scanClose",sheet).addEventListener('click',close);
+  const found=(code)=>{
+    if(done)return;done=true;stop();
+    status.textContent="Looking up "+code+"…";
+    offLookup(code).then(food=>{
+      if(!food){status.textContent="Not found for "+code+". Try entering it, or add it as a custom food.";done=false;return;}
+      // Hand the scanned product to the portion screen in the add-food sheet.
+      sheet.remove();
+      const search=$("#foodSearch",addSheet);if(search)search.style.display="none";
+      const scanB=$("#scanBtn",addSheet);if(scanB)scanB.style.display="none";
+      showPortion(food,meal,addSheet,closeAdd,q=>{if(search)search.style.display="";if(scanB)scanB.style.display="";draw(q);});
+    }).catch(err=>{
+      status.textContent=native?("Lookup failed — check your connection."):("Lookup needs the installed app (the browser version can't reach the food database).");
+      done=false;
+    });
+  };
+  $("#scanLook",sheet).addEventListener('click',()=>{const c=($("#scanManual",sheet).value||"").replace(/\D/g,'');if(c.length>=6)found(c);else status.textContent="Enter the full barcode number.";});
+  // Start the camera + detection.
+  const startCam=()=>{
+    if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){
+      status.textContent=native?"Camera unavailable on this device.":"Camera needs the installed app. Enter the barcode below instead.";return;}
+    navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:"environment"}}}).then(s=>{
+      stream=s;vid.srcObject=s;vid.play();
+      if('BarcodeDetector' in window){
+        try{detector=new BarcodeDetector({formats:['ean_13','ean_8','upc_a','upc_e','code_128','code_39','itf','qr_code']});}catch(e){detector=null;}
+      }
+      if(detector){
+        const scan=()=>{if(done)return;detector.detect(vid).then(codes=>{
+          if(codes&&codes.length){found(codes[0].rawValue);}else{raf=requestAnimationFrame(scan);}
+        }).catch(()=>{raf=requestAnimationFrame(scan);});};
+        raf=requestAnimationFrame(scan);
+      }else{
+        status.textContent="Loading scanner…";
+        loadZXing().then(()=>{
+          const Z=window.ZXingBrowser;if(!Z){status.textContent="Scanner unavailable — enter the barcode below.";return;}
+          status.textContent="Point the camera at the barcode…";
+          const reader=new Z.BrowserMultiFormatReader();
+          reader.decodeFromVideoElement(vid,(result)=>{if(result&&!done)found(result.getText());}).then(c=>{zxCtrl=c;}).catch(()=>{});
+        }).catch(()=>{status.textContent="Scanner unavailable — enter the barcode below.";});
+      }
+    }).catch(err=>{
+      status.textContent=(err&&err.name==='NotAllowedError')?"Camera permission denied. Enter the barcode below.":(native?"Couldn't open the camera. Enter the barcode below.":"Camera needs the installed app. Enter the barcode below.");
+    });
+  };
+  startCam();
 }
 function openBudget(){
   const bud=state.settings.calorieBudget||1200;
