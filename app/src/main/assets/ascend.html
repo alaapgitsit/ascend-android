@@ -391,6 +391,14 @@ hr.soft{border:0;border-top:1px solid var(--line);margin:18px 0}
 .fast-time{font-family:var(--font-display);font-size:27px;color:var(--cyan);line-height:1.1;margin-top:3px}
 .fast-ring.on .fast-time{color:var(--primary)}
 .fast-end{background:var(--surface-2)!important;border:1px solid var(--line)!important;color:var(--fg)!important}
+.fast-times{display:flex;align-items:center;justify-content:center;gap:14px;margin:4px 0 12px;padding:11px 12px;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:12px}
+.fast-times.idle{opacity:.85}
+.ft-col{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0}
+.ft-col span{font-size:9.5px;letter-spacing:1px;text-transform:uppercase;color:var(--faint);font-weight:800}
+.ft-col b{font-size:15px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ft-col b.done{color:var(--lime)}
+.ft-arrow{color:var(--primary);font-weight:800;font-size:16px}
 .proto-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .proto-opt{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:14px 6px;font-weight:800;font-size:16px;color:var(--fg);display:flex;flex-direction:column;gap:3px;align-items:center}
 .proto-opt small{font-size:10px;color:var(--faint);font-weight:700}
@@ -1790,19 +1798,32 @@ function startFastTick(){stopFastTick();if(!state.fasting.start)return;
     const h=fastElapsedH();e.textContent=fmtHM(h);const r=document.getElementById("fastRing");
     if(r)r.style.setProperty("--p",Math.min(100,Math.round(h/fastTarget()*100)));},1000);}
 function stopFastTick(){if(fastInt){clearInterval(fastInt);fastInt=null;}}
+function fmtClock(ts){return new Date(ts).toLocaleTimeString(undefined,{hour:"numeric",minute:"2-digit"});}
+function fmtClockDay(ts){const d=new Date(ts);const today=sameDay(d,Date.now());
+  const tm=d.toLocaleTimeString(undefined,{hour:"numeric",minute:"2-digit"});
+  return today?tm:d.toLocaleDateString(undefined,{weekday:"short"})+" "+tm;}
 function fastCard(){
   const active=!!state.fasting.start;const target=fastTarget();
-  let h,label,pct,btn;
+  let h,label,pct,btn,times="";
   if(active){h=fastElapsedH();label="Fasting";pct=Math.min(100,Math.round(h/target*100));
-    btn=`<button class="btn btn-block fast-end" id="fastBtn">End fast</button>`;}
+    btn=`<button class="btn btn-block fast-end" id="fastBtn">Stop fasting</button>`;
+    const startTs=state.fasting.start, endTs=startTs+target*3600000;
+    const reached=Date.now()>=endTs;
+    times=`<div class="fast-times">
+      <div class="ft-col"><span>Started</span><b>${fmtClockDay(startTs)}</b></div>
+      <div class="ft-arrow">→</div>
+      <div class="ft-col"><span>${reached?'Goal hit':'Ends'}</span><b class="${reached?'done':''}">${fmtClockDay(endTs)}</b></div>
+    </div>`;}
   else{const since=hoursSince(lastFastEnd());h=since||0;label="Since last fast";pct=0;
-    btn=`<button class="btn btn-primary btn-block" id="fastBtn">Start fasting</button>`;}
+    btn=`<button class="btn btn-primary btn-block" id="fastBtn">Start fasting</button>`;
+    const lastEnd=lastFastEnd();
+    if(lastEnd)times=`<div class="fast-times idle"><div class="ft-col"><span>Last fast ended</span><b>${fmtClockDay(lastEnd)}</b></div></div>`;}
   return `<div class="fast-card">
     <div class="fast-top">
       <button class="fast-proto" id="fastProto">${state.fasting.protocol} ▾</button>
       <div class="fast-ring ${active?'on':''}" id="fastRing" style="--p:${pct}"><div class="fast-inner"><div class="fast-lbl">${label}</div><div class="fast-time" id="fastTime">${fmtHM(h)}</div></div></div>
       <div class="fast-target">${active?`target<br>${target}h`:`goal<br>${target}:${24-target}`}</div>
-    </div>${btn}</div>`;
+    </div>${times}${btn}</div>`;
 }
 function openFastProto(){
   const sheet=document.createElement("div");sheet.className="scrim";
