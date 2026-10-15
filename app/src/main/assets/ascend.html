@@ -3,40 +3,41 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#161748">
-<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2096%2096%22%3E%3Crect%20width%3D%2296%22%20height%3D%2296%22%20rx%3D%2222%22%20fill%3D%22%23161748%22%2F%3E%3Cpath%20d%3D%22M18%2074%20L44%2034%20L56%2054%20L64%2042%20L80%2074%20Z%22%20fill%3D%22%23f95d9b%22%2F%3E%3Ccircle%20cx%3D%2266%22%20cy%3D%2230%22%20r%3D%226%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fsvg%3E">
-<style>html,body{background:#161748}</style>
+<meta name="theme-color" content="#f3efe6">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2096%2096%22%3E%3Crect%20width%3D%2296%22%20height%3D%2296%22%20rx%3D%2222%22%20fill%3D%22%23ff3a22%22%2F%3E%3Cpath%20d%3D%22M18%2072%20L44%2034%20L56%2054%20L64%2042%20L80%2072%20Z%22%20fill%3D%22%23f3efe6%22%2F%3E%3Ccircle%20cx%3D%2266%22%20cy%3D%2230%22%20r%3D%226%22%20fill%3D%22%23c7af6b%22%2F%3E%3C%2Fsvg%3E">
+<style>html,body{background:#f3efe6}</style>
 <title>Ascend</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Archivo:wght@400;500;600;700;800;900&display=swap">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
-/* ---- Ascend — "mountain journey" identity (palette from the Horace landing art) ----
+/* ---- Ascend — "five/four" editorial identity ----
    Layout: full-height app shell — sticky top bar, scrolling main, bottom tab bar.
-   Color: deep purple baseline, pink highlight, bluewater + treeline-green accents. Rounded Baloo/Nunito type. */
+   Color: warm paper base, vermillion red energy, gold + muted teal accents. Space Mono data / Archivo body. Committed light theme. */
 :root{
-  color-scheme: dark;
-  --bg:#161748;
-  --surface:#1E1F5C;
-  --surface-2:#272A72;
-  --surface-3:#313473;
-  --line:#3A3D80;
-  --fg:#F5F4FB;
-  --muted:#A6A6D0;
-  --faint:#7577B0;
-  --primary:#f95d9b;
-  --primary-2:#ff86b6;
-  --magenta:#f95d9b;
-  --cyan:#39a0ca;
-  --lime:#5BB37D;
-  --danger:#ff5c7a;
-  --grad:linear-gradient(135deg,#f95d9b 0%,#39a0ca 100%);
-  --grad-cyan:linear-gradient(135deg,#39a0ca 0%,#478559 100%);
-  --font-display:"Baloo 2",system-ui,sans-serif;
-  --font-ui:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --r:16px;
-  --shadow:0 12px 34px rgba(10,8,40,.5);
+  color-scheme: light;
+  --bg:#f3efe6;
+  --surface:#ffffff;
+  --surface-2:#ece6d7;
+  --surface-3:#e1dac6;
+  --line:#dcd4c0;
+  --fg:#191714;
+  --muted:#6c6454;
+  --faint:#9b937f;
+  --primary:#ff3a22;
+  --primary-2:#ff6a55;
+  --magenta:#ff3a22;
+  --cyan:#628078;
+  --lime:#a4893d;
+  --gold:#c7af6b;
+  --danger:#cc2a16;
+  --grad:linear-gradient(135deg,#ff3a22 0%,#ff6a55 100%);
+  --grad-cyan:linear-gradient(135deg,#628078 0%,#4d6b61 100%);
+  --font-display:"Space Mono","Courier New",monospace;
+  --font-ui:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --r:12px;
+  --shadow:0 10px 28px rgba(60,40,10,.14);
 }
 *{box-sizing:border-box}
 html,body{height:100%}
@@ -54,11 +55,11 @@ input::placeholder,textarea::placeholder{color:var(--faint)}
 /* ---------- shell ---------- */
 #app{display:flex;flex-direction:column;height:100%;max-width:560px;margin:0 auto;position:relative}
 #topbar{flex:0 0 auto;display:flex;align-items:center;gap:12px;padding:14px 18px 12px;
-  background:linear-gradient(180deg,rgba(14,14,21,.96),rgba(14,14,21,.72));backdrop-filter:blur(10px);
+  background:linear-gradient(180deg,rgba(243,239,230,.96),rgba(243,239,230,.72));backdrop-filter:blur(10px);
   border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
 .brand{display:flex;align-items:center;gap:10px;margin-right:auto}
 .logo{width:34px;height:34px;border-radius:10px;background:var(--grad);display:grid;place-items:center;
-  box-shadow:0 4px 14px rgba(249,93,155,.4)}
+  box-shadow:0 4px 14px rgba(255,58,34,.4)}
 .logo svg{width:20px;height:20px;display:block}
 .brand h1{font-family:var(--font-display);font-weight:400;font-size:22px;letter-spacing:.5px;margin:0;line-height:1}
 .brand .sub{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--faint);margin-top:1px}
@@ -78,7 +79,7 @@ main{flex:1 1 auto;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:
 /* ---------- bottom nav ---------- */
 #nav{flex:0 0 auto;position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:center;gap:4px;
   padding:8px 10px calc(10px + env(safe-area-inset-bottom,0px));
-  background:linear-gradient(0deg,var(--bg) 60%,rgba(14,14,21,0));z-index:20}
+  background:linear-gradient(0deg,var(--bg) 60%,rgba(243,239,230,0));z-index:20}
 .nav-inner{display:flex;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:20px;
   padding:6px;box-shadow:var(--shadow);width:100%;max-width:420px}
 .nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
@@ -88,10 +89,10 @@ main{flex:1 1 auto;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:
 .nav-btn svg{width:22px;height:22px}
 .nav-btn.active{color:var(--fg);background:var(--surface-2)}
 .nav-btn.center .fab{width:38px;height:38px;border-radius:50%;background:var(--grad);display:grid;place-items:center;
-  box-shadow:0 4px 14px rgba(249,93,155,.45)}
+  box-shadow:0 4px 14px rgba(255,58,34,.45)}
 .nav-btn.center .fab svg{width:22px;height:22px;color:#fff}
 .nav-btn.center.active{background:transparent;color:var(--primary)}
-.nav-btn.center.active .fab{box-shadow:0 6px 18px rgba(249,93,155,.55)}
+.nav-btn.center.active .fab{box-shadow:0 6px 18px rgba(255,58,34,.55)}
 
 /* ---------- generic ---------- */
 .section-title{font-family:var(--font-display);font-weight:400;font-size:13px;letter-spacing:2px;
@@ -102,19 +103,19 @@ main{flex:1 1 auto;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:
 .btn{border:0;border-radius:13px;padding:13px 18px;font-weight:800;font-size:15px;letter-spacing:.3px;
   background:var(--surface-2);border:1px solid var(--line);color:var(--fg);transition:transform .12s,filter .15s}
 .btn:active{transform:scale(.97)}
-.btn-primary{background:var(--grad);border:0;color:#fff;box-shadow:0 6px 18px rgba(249,93,155,.35)}
+.btn-primary{background:var(--grad);border:0;color:#fff;box-shadow:0 6px 18px rgba(255,58,34,.35)}
 .btn-ghost{background:transparent}
 .btn-block{width:100%}
 .btn-cyan{background:var(--grad-cyan);border:0;color:#04121a}
 .pill{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:800;letter-spacing:.5px;
   text-transform:uppercase;padding:4px 9px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);color:var(--muted)}
-.pill.lime{color:var(--lime);border-color:rgba(71,133,89,.35);background:rgba(71,133,89,.08)}
-.pill.mag{color:var(--magenta);border-color:rgba(249,93,155,.35);background:rgba(249,93,155,.08)}
-.pill.cyan{color:var(--cyan);border-color:rgba(57,160,202,.35);background:rgba(57,160,202,.08)}
+.pill.lime{color:var(--lime);border-color:rgba(164,137,61,.35);background:rgba(164,137,61,.08)}
+.pill.mag{color:var(--magenta);border-color:rgba(255,58,34,.35);background:rgba(255,58,34,.08)}
+.pill.cyan{color:var(--cyan);border-color:rgba(98,128,120,.35);background:rgba(98,128,120,.08)}
 
 /* ---------- home / dashboard ---------- */
 .hero{background:var(--grad);border-radius:20px;padding:18px 18px 16px;position:relative;overflow:hidden;
-  box-shadow:0 12px 34px rgba(249,93,155,.3)}
+  box-shadow:0 12px 34px rgba(255,58,34,.3)}
 .hero::after{content:"";position:absolute;right:-30px;top:-30px;width:150px;height:150px;border-radius:50%;
   background:radial-gradient(circle,rgba(255,255,255,.25),transparent 70%)}
 .hero .eyebrow{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.85);font-weight:800}
@@ -140,7 +141,7 @@ main{flex:1 1 auto;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:
 .wd{flex:1;text-align:center}
 .wd .dot{width:100%;aspect-ratio:1;max-width:34px;margin:0 auto 5px;border-radius:11px;background:var(--surface-2);
   border:1px solid var(--line);display:grid;place-items:center;font-size:13px;font-weight:800;color:var(--faint)}
-.wd .dot.on{background:var(--grad);border:0;color:#fff;box-shadow:0 4px 12px rgba(249,93,155,.35)}
+.wd .dot.on{background:var(--grad);border:0;color:#fff;box-shadow:0 4px 12px rgba(255,58,34,.35)}
 .wd .dot.today{outline:2px solid var(--cyan);outline-offset:1px}
 .wd .lbl{font-size:9.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--faint);font-weight:800}
 .wd .dnum{font-size:9px;font-weight:800;color:var(--muted);margin-top:3px;font-variant-numeric:tabular-nums;white-space:nowrap}
@@ -181,7 +182,7 @@ main{flex:1 1 auto;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:
 .sess-bar{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin:14px 0 4px;padding:12px 14px;border-radius:14px;
   background:var(--surface);border:1px solid var(--line)}
 .start-btn{display:flex;align-items:center;gap:6px;background:var(--grad);border:0;color:#fff;border-radius:11px;
-  padding:9px 15px;font-weight:800;font-size:13px;box-shadow:0 4px 12px rgba(249,93,155,.35)}
+  padding:9px 15px;font-weight:800;font-size:13px;box-shadow:0 4px 12px rgba(255,58,34,.35)}
 .start-btn.running{background:var(--surface-2);border:1px solid var(--line);color:var(--fg);box-shadow:none}
 .start-btn:active{transform:scale(.96)}
 .sess-bar .timer{font-family:var(--font-display);font-size:22px;letter-spacing:.5px}
@@ -193,7 +194,7 @@ main{flex:1 1 auto;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:
 .when-row{display:flex;flex-direction:column;gap:7px;margin:14px 0 2px;padding:12px 14px;border-radius:14px;
   background:var(--surface);border:1px solid var(--line)}
 .when-row input{background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:11px 12px;
-  font-weight:700;color:var(--fg);color-scheme:dark;width:100%}
+  font-weight:700;color:var(--fg);color-scheme:light;width:100%}
 .when-row input:focus{outline:0;border-color:var(--primary)}
 .when-row .lbl{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--faint);font-weight:800}
 .savedline{font-size:10.5px;color:var(--faint);font-weight:700;text-align:right;margin:4px 4px 0;letter-spacing:.3px}
@@ -221,7 +222,7 @@ main{flex:1 1 auto;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:
   padding:11px 6px;font-weight:700;font-size:16px;-moz-appearance:textfield}
 .set-row input::-webkit-outer-spin-button,.set-row input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 .set-row input:focus{outline:0;border-color:var(--primary);background:var(--surface-3)}
-.set-row input.filled{border-color:rgba(57,160,202,.4)}
+.set-row input.filled{border-color:rgba(98,128,120,.4)}
 .set-row .track{font-size:10px;color:var(--cyan);text-align:center;font-weight:900}
 .set-row .track.off{color:transparent}
 .type-toggle{display:flex;gap:6px;margin-bottom:11px}
@@ -322,9 +323,9 @@ hr.soft{border:0;border-top:1px solid var(--line);margin:18px 0}
 .cal-side b{font-family:var(--font-display);font-size:19px}
 .macros{display:flex;gap:6px;margin-top:9px;flex-wrap:wrap}
 .mc{font-size:11px;font-weight:800;padding:3px 8px;border-radius:7px}
-.mc.c{color:#39a0ca;background:rgba(57,160,202,.15)}
-.mc.p{color:#f95d9b;background:rgba(249,93,155,.15)}
-.mc.f{color:#5BB37D;background:rgba(71,133,89,.18)}
+.mc.c{color:#628078;background:rgba(98,128,120,.15)}
+.mc.p{color:#ff3a22;background:rgba(255,58,34,.15)}
+.mc.f{color:#a4893d;background:rgba(164,137,61,.18)}
 .meal-minis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
 .meal-mini{background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:8px 4px;text-align:center}
 .meal-mini span{display:block;font-size:9px;letter-spacing:.5px;text-transform:uppercase;color:var(--faint);font-weight:800;margin-bottom:2px}
@@ -356,7 +357,7 @@ hr.soft{border:0;border-top:1px solid var(--line);margin:18px 0}
 .fr-del:active{color:var(--danger)}
 .add-food{width:100%;margin-top:9px;background:transparent;border:1.5px dashed var(--line);border-radius:11px;padding:10px;color:var(--muted);font-weight:800;font-size:13px}
 .add-food:active{border-color:var(--primary);color:var(--primary)}
-.hist-note{background:rgba(57,160,202,.08);border:1px solid rgba(57,160,202,.25);color:var(--cyan);border-radius:12px;padding:11px 13px;font-size:12.5px;font-weight:700;margin-bottom:12px;line-height:1.5}
+.hist-note{background:rgba(98,128,120,.08);border:1px solid rgba(98,128,120,.25);color:var(--cyan);border-radius:12px;padding:11px 13px;font-size:12.5px;font-weight:700;margin-bottom:12px;line-height:1.5}
 .food-search{width:100%;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:13px 14px;font-size:16px;color:var(--fg)}
 .food-search:focus{outline:0;border-color:var(--primary)}
 .food-results{margin-top:10px;max-height:40vh;overflow-y:auto;display:flex;flex-direction:column;gap:6px}
@@ -375,7 +376,7 @@ hr.soft{border:0;border-top:1px solid var(--line);margin:18px 0}
 .body-row{display:flex;align-items:center;gap:12px}
 .body-row label{flex:1;font-weight:700;font-size:14px}
 .body-row label small{color:var(--faint);font-weight:800}
-.body-row input{width:118px;flex:0 0 auto;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:11px;font-size:16px;text-align:center;color:var(--fg);color-scheme:dark;-moz-appearance:textfield}
+.body-row input{width:118px;flex:0 0 auto;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:11px;font-size:16px;text-align:center;color:var(--fg);color-scheme:light;-moz-appearance:textfield}
 .body-row input::-webkit-outer-spin-button,.body-row input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 .body-row input:focus{outline:0;border-color:var(--primary)}
 
@@ -402,7 +403,7 @@ hr.soft{border:0;border-top:1px solid var(--line);margin:18px 0}
 .proto-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .proto-opt{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:14px 6px;font-weight:800;font-size:16px;color:var(--fg);display:flex;flex-direction:column;gap:3px;align-items:center}
 .proto-opt small{font-size:10px;color:var(--faint);font-weight:700}
-.proto-opt.on{border-color:var(--primary);background:rgba(249,93,155,.1);color:var(--primary)}
+.proto-opt.on{border-color:var(--primary);background:rgba(255,58,34,.1);color:var(--primary)}
 
 /* portion editor + goals + overflow fixes */
 .portion{padding:4px 0}
@@ -421,7 +422,7 @@ hr.soft{border:0;border-top:1px solid var(--line);margin:18px 0}
 .goal-row input{width:108px;flex:0 0 auto;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:11px;font-size:16px;text-align:center;color:var(--fg)}
 .goal-row input:focus{outline:0;border-color:var(--primary)}
 .dotc{width:10px;height:10px;border-radius:3px;display:inline-block;flex:0 0 auto}
-.dotc.c{background:#39a0ca}.dotc.p{background:#f95d9b}.dotc.f{background:#5BB37D}
+.dotc.c{background:#628078}.dotc.p{background:#ff3a22}.dotc.f{background:#a4893d}
 .goal-calc{margin-top:12px;font-size:12.5px;color:var(--muted);text-align:center;line-height:1.5}
 .goal-calc b{color:var(--fg)}
 .goal-calc .warn{color:var(--danger);font-weight:800}
@@ -757,9 +758,8 @@ function renderLog(){
     body+=`<button class="add-ex" id="addEx">＋ Add exercise</button>
       <div class="save-row">
         <button class="btn btn-primary btn-block" id="finishBtn">Finish &amp; save</button>
-        <button class="btn btn-ghost btn-block" id="garminBtn" style="font-size:13px;color:var(--cyan);border-color:rgba(57,160,202,.3)">⌚ Also export to Garmin now</button>
         <button class="btn btn-ghost btn-block" id="discardBtn" style="color:var(--faint)">Discard</button>
-        <div class="export-note">Saves to Ascend instantly. Garmin export is <b>optional</b> — you can export any past session later from its card on Home.</div>
+        <div class="export-note">Saved to Ascend instantly.</div>
       </div>`;
   }
 
@@ -801,7 +801,6 @@ function renderLog(){
       saveDraft();renderLog();
     });
     $("#finishBtn",el).addEventListener("click",()=>finishWorkout(false));
-    $("#garminBtn",el).addEventListener("click",()=>finishWorkout(true));
     $("#discardBtn",el).addEventListener("click",()=>{session=null;stopSessTimer();stopAutoSave();clearDraft();renderLog();toast("Session discarded");});
     $("#restBtn",el).addEventListener("click",toggleRest);
     const sb=$("#startTimerBtn",el);if(sb)sb.addEventListener("click",toggleTimer);
@@ -968,9 +967,8 @@ function finishWorkout(sendGarmin){
   session=null;stopSessTimer();stopAutoSave();clearDraft();
   setTab("home");
   if(hadPR){prCelebrate(prs);}
-  else if(!sendGarmin){toast("Session saved 💪");}
+  else {toast("Session saved 💪");}
   renderGraphs();
-  if(sendGarmin){ exportFit(workout); }
 }
 function prCelebrate(prs){
   const t=$("#toast");t.className="show pr";
@@ -983,7 +981,7 @@ function toast(msg){const t=$("#toast");t.className="show";t.textContent=msg;
 
 /* lightweight confetti (no lib) */
 function confetti(){
-  const cols=["#f95d9b","#39a0ca","#478559","#ff86b6","#f7c948"];
+  const cols=["#ff3a22","#628078","#c7af6b","#a4893d","#ff6a55"];
   const c=document.createElement("div");
   c.style.cssText="position:fixed;inset:0;pointer-events:none;z-index:90;overflow:hidden";
   document.body.appendChild(c);
@@ -1002,20 +1000,20 @@ function confetti(){
 
 /* ---------- GRAPHS ---------- */
 const METRICS=[
-  {k:"weight",label:"Weight",unit:()=>unitLbl(),color:"#39a0ca",conv:v=>round1(fromKg(v))},
-  {k:"kcal",label:"Calories",unit:()=>"cal",color:"#f95d9b",food:true},
-  {k:"steps",label:"Steps",unit:()=>"",color:"#478559"},
-  {k:"deep",label:"Deep sleep",unit:()=>"h",color:"#8A6FE8"},
-  {k:"sleep",label:"Total sleep",unit:()=>"h",color:"#39a0ca"},
-  {k:"waist",label:"Waist",unit:()=>"cm",color:"#f95d9b"},
-  {k:"hip",label:"Hip",unit:()=>"cm",color:"#ff86b6"},
-  {k:"chest",label:"Chest",unit:()=>"cm",color:"#478559"},
-  {k:"cardioDist",label:"Cardio km",unit:()=>"km",color:"#39a0ca"},
-  {k:"cardioPace",label:"Cardio pace",unit:()=>"/km",color:"#478559"},
-  {k:"bps",label:"BP systolic",unit:()=>"mmHg",color:"#f95d9b"},
-  {k:"jab",label:"Jab",unit:()=>"mg",color:"#5BB37D"},
-  {k:"hrv",label:"HRV",unit:()=>"ms",color:"#39a0ca"},
-  {k:"fast",label:"Fasting h",unit:()=>"h",color:"#8A6FE8"}
+  {k:"weight",label:"Weight",unit:()=>unitLbl(),color:"#628078",conv:v=>round1(fromKg(v))},
+  {k:"kcal",label:"Calories",unit:()=>"cal",color:"#ff3a22",food:true},
+  {k:"steps",label:"Steps",unit:()=>"",color:"#a4893d"},
+  {k:"deep",label:"Deep sleep",unit:()=>"h",color:"#c7af6b"},
+  {k:"sleep",label:"Total sleep",unit:()=>"h",color:"#628078"},
+  {k:"waist",label:"Waist",unit:()=>"cm",color:"#ff3a22"},
+  {k:"hip",label:"Hip",unit:()=>"cm",color:"#ff6a55"},
+  {k:"chest",label:"Chest",unit:()=>"cm",color:"#a4893d"},
+  {k:"cardioDist",label:"Cardio km",unit:()=>"km",color:"#628078"},
+  {k:"cardioPace",label:"Cardio pace",unit:()=>"/km",color:"#a4893d"},
+  {k:"bps",label:"BP systolic",unit:()=>"mmHg",color:"#ff3a22"},
+  {k:"jab",label:"Jab",unit:()=>"mg",color:"#a4893d"},
+  {k:"hrv",label:"HRV",unit:()=>"ms",color:"#628078"},
+  {k:"fast",label:"Fasting h",unit:()=>"h",color:"#c7af6b"}
 ];
 function metricPoints(k){
   if(k==="kcal")return kcalDaily();
@@ -1064,7 +1062,7 @@ function drawTrend(){
   const cv=$("#chart");if(!cv||!window.Chart)return;
   let pts,label,unit,color;
   if(graphMetric.indexOf("ex:")===0){const n=graphMetric.slice(3);const s=seriesFor(n);
-    pts=s.map(p=>({date:p.date,val:round1(fromKg(p.kg))}));label=n;unit=unitLbl();color="#39a0ca";}
+    pts=s.map(p=>({date:p.date,val:round1(fromKg(p.kg))}));label=n;unit=unitLbl();color="#628078";}
   else{const m=METRICS.find(x=>x.k===graphMetric)||METRICS[0];pts=metricPoints(m.k);label=m.label;unit=m.unit();color=m.color;}
   const labels=pts.map(p=>p.date), data=pts.map(p=>p.val);
   if(chart)chart.destroy();
@@ -1074,201 +1072,14 @@ function drawTrend(){
   const many=data.length>90;
   chart=new Chart(ctx,{type:"line",data:{labels,datasets:[{data,label,borderColor:color,borderWidth:2.5,
     tension:.25,fill:true,backgroundColor:grad,pointRadius:many?0:3,pointHoverRadius:5,
-    pointBackgroundColor:color,pointBorderColor:"#161748",pointBorderWidth:1.5}]},
+    pointBackgroundColor:color,pointBorderColor:"#ffffff",pointBorderWidth:1.5}]},
     options:{responsive:true,maintainAspectRatio:false,animation:false,
-      plugins:{legend:{display:false},tooltip:{backgroundColor:"#1E1F5C",borderColor:"#3A3D80",borderWidth:1,
-        titleColor:"#F5F4FB",bodyColor:"#A6A6D0",padding:10,callbacks:{label:c=>` ${c.parsed.y} ${unit}`}}},
-      scales:{x:{grid:{color:"rgba(150,150,210,.15)"},ticks:{color:"#7577B0",font:{family:"Archivo",weight:"700",size:10},
+      plugins:{legend:{display:false},tooltip:{backgroundColor:"#191714",borderColor:"#3a3630",borderWidth:1,
+        titleColor:"#ffffff",bodyColor:"#e4dfd2",padding:10,callbacks:{label:c=>` ${c.parsed.y} ${unit}`}}},
+      scales:{x:{grid:{color:"rgba(60,40,10,.10)"},ticks:{color:"#9b937f",font:{family:"Archivo",weight:"700",size:10},
         maxRotation:0,autoSkip:true,maxTicksLimit:7,callback:function(v){const l=this.getLabelForValue(v);return l?String(l).slice(5):l;}}},
-        y:{grid:{color:"rgba(150,150,210,.15)"},ticks:{color:"#A6A6D0",font:{family:"Archivo",weight:"700",size:10},
+        y:{grid:{color:"rgba(60,40,10,.10)"},ticks:{color:"#6c6454",font:{family:"Archivo",weight:"700",size:10},
           callback:v=>v+(unit||"")},grace:"6%"}}}});
-}
-
-/* ========================= Garmin FIT export ========================= */
-/* Builds a minimal strength-training .FIT activity (sport=training / sub=strength),
-   one `set` message per logged set with reps + weight. */
-const FIT_EPOCH=631065600; // seconds between unix epoch and 1989-12-31
-function fitTime(ms){return Math.round(ms/1000)-FIT_EPOCH;}
-const CRC_TABLE=[0x0000,0xCC01,0xD801,0x1400,0xF001,0x3C00,0x2800,0xE401,0xA001,0x6C00,0x7800,0xB401,0x5000,0x9C01,0x8801,0x4400];
-function crc16(arr){let crc=0;for(let i=0;i<arr.length;i++){let b=arr[i];
-  let t=CRC_TABLE[crc&0xF];crc=(crc>>4)&0x0FFF;crc=crc^t^CRC_TABLE[b&0xF];
-  t=CRC_TABLE[crc&0xF];crc=(crc>>4)&0x0FFF;crc=crc^t^CRC_TABLE[(b>>4)&0xF];}
-  return crc&0xFFFF;}
-
-class FitWriter{
-  constructor(){this.b=[];}
-  u8(v){this.b.push(v&0xFF);}
-  u16(v){this.b.push(v&0xFF,(v>>8)&0xFF);}
-  u32(v){v=v>>>0;this.b.push(v&0xFF,(v>>8)&0xFF,(v>>16)&0xFF,(v>>24)&0xFF);}
-  // define a local message type
-  def(local,global,fields){ // fields: [num,size,baseType]
-    this.u8(0x40|local); this.u8(0); this.u8(0); this.u16(global); this.u8(fields.length);
-    fields.forEach(f=>{this.u8(f[0]);this.u8(f[1]);this.u8(f[2]);});
-  }
-  hdr(local){this.u8(local&0x0F);}
-  bytes(){return this.b;}
-}
-// base types
-const T_ENUM=0x00,T_U8=0x02,T_U16=0x84,T_U32=0x86,T_U32Z=0x8C,T_STR=0x07;
-
-function buildFit(workout){
-  const w=new FitWriter();
-  const start=new Date(workout.date).getTime();
-  const dur=(workout.durationSec||0)*1000;
-  const end=start+dur;
-  const tzOff=-(new Date(workout.date).getTimezoneOffset())*60; // seconds east of UTC
-  const unitEnum = (U()==="lb")?2:1; // fit_base_unit: 1=kg,2=lb
-
-  // --- file_id (global 0), local 0
-  w.def(0,0,[[0,1,T_ENUM],[1,2,T_U16],[2,2,T_U16],[3,4,T_U32Z],[4,4,T_U32]]);
-  w.hdr(0); w.u8(4); /*type=activity*/ w.u16(255);/*manufacturer=development*/ w.u16(0);/*product*/
-  w.u32(Math.floor(Math.random()*0xFFFFFFF)+1);/*serial*/ w.u32(fitTime(start));
-
-  // --- set messages (global 225), local 1
-  w.def(1,225,[
-    [254,4,T_U32], // timestamp
-    [0,4,T_U32],   // duration (scale 1000, s)
-    [3,2,T_U16],   // repetitions
-    [4,2,T_U16],   // weight (scale 16, kg)
-    [5,1,T_ENUM],  // set_type (1=active,0=rest)
-    [6,4,T_U32],   // start_time
-    [9,2,T_U16],   // weight_display_unit
-    [10,2,T_U16]   // message_index
-  ]);
-  let t=start, idx=0, totalReps=0;
-  const perSet=Math.max(1,Math.floor((workout.durationSec||(workout.exercises.length*4*50))/Math.max(1,countSets(workout))));
-  workout.exercises.forEach(ex=>{
-    ex.sets.forEach(s=>{
-      if(s.reps==null && s.weightKg==null)return;
-      const st=t;
-      w.hdr(1);
-      w.u32(fitTime(t+perSet*1000));
-      w.u32(Math.round(perSet*1000));
-      w.u16(s.reps!=null?Math.max(0,Math.round(s.reps)):0xFFFF);
-      w.u16(s.weightKg!=null?Math.round(s.weightKg*16):0xFFFF);
-      w.u8(1); // active
-      w.u32(fitTime(st));
-      w.u16(unitEnum);
-      w.u16(idx++);
-      if(s.reps!=null)totalReps+=s.reps;
-      t+=perSet*1000;
-    });
-  });
-  const realEnd=Math.max(end,t);
-  const elapsed=Math.max(1,Math.round((realEnd-start)/1000));
-
-  // --- lap (global 19), local 2
-  w.def(2,19,[[254,4,T_U32],[253,4,T_U32],[2,4,T_U32],[7,4,T_U32],[8,4,T_U32],[0,1,T_ENUM],[24,1,T_ENUM],[25,1,T_ENUM]]);
-  // fields: timestamp(254), start_time(2? ) — careful: lap.start_time=2, total_elapsed_time=7, total_timer_time=8, event=0, sport=25, sub_sport=39?
-  // (Using commonly-accepted subset below.)
-  w.hdr(2);
-  w.u32(fitTime(realEnd)); // 254 timestamp
-  w.u32(fitTime(realEnd)); // 253 (reuse)
-  w.u32(fitTime(start));   // 2 start_time
-  w.u32(elapsed*1000);     // 7 total_elapsed_time
-  w.u32(elapsed*1000);     // 8 total_timer_time
-  w.u8(9);                 // 0 event = lap
-  w.u8(10);                // 24 sport = training
-  w.u8(20);                // 25 sub_sport = strength_training
-
-  // --- session (global 18), local 3
-  w.def(3,18,[[254,4,T_U32],[2,4,T_U32],[7,4,T_U32],[8,4,T_U32],[5,1,T_ENUM],[6,1,T_ENUM],
-              [254+0,0,0]]); // placeholder removed below
-  // rebuild session def cleanly
-  w.b.length; // (no-op)
-
-  // We mis-structured session def above; instead emit a fresh, correct session def+data.
-  // Correct session: timestamp(254),start_time(2),total_elapsed_time(7),total_timer_time(8),
-  // sport(5),sub_sport(6),first_lap_index(25),num_laps(26),message_index(254? no ->253? use 254 as timestamp),
-  // We'll use message_index via field 254? message_index is 254 only for some msgs. For session message_index=254? Actually message_index=254 is reserved field for many msgs. Use it.
-  return finalizeFit(w);
-}
-function countSets(workout){let n=0;workout.exercises.forEach(ex=>ex.sets.forEach(s=>{if(s.reps!=null||s.weightKg!=null)n++;}));return Math.max(1,n);}
-
-/* Because the incremental session/activity writing is fiddly, we rebuild the whole
-   file with a clean, verified message set in buildFitClean and use THAT. */
-function finalizeFit(_ignore){ return null; }
-
-/* ---- Clean, self-contained FIT builder (the one actually used) ---- */
-function buildFitClean(workout){
-  const w=new FitWriter();
-  const start=new Date(workout.date).getTime();
-  const nSets=countSets(workout);
-  const perSet=Math.max(20, Math.round((workout.durationSec|| (nSets*55))/nSets));
-  const unitEnum=(U()==="lb")?2:1;
-
-  // file_id — local 0
-  w.def(0,0,[[0,1,T_ENUM],[1,2,T_U16],[2,2,T_U16],[3,4,T_U32Z],[4,4,T_U32]]);
-  w.hdr(0);w.u8(4);w.u16(255);w.u16(0);w.u32((Math.floor(Math.random()*0xFFFFFFE)+1)>>>0);w.u32(fitTime(start));
-
-  // set — local 1
-  w.def(1,225,[[254,4,T_U32],[0,4,T_U32],[3,2,T_U16],[4,2,T_U16],[5,1,T_ENUM],[6,4,T_U32],[9,2,T_U16],[10,2,T_U16]]);
-  let t=start,idx=0;
-  workout.exercises.forEach(ex=>ex.sets.forEach(s=>{
-    if(s.reps==null&&s.weightKg==null)return;
-    const st=t, en=t+perSet*1000;
-    w.hdr(1);
-    w.u32(fitTime(en));
-    w.u32(perSet*1000);
-    w.u16(s.reps!=null?Math.max(0,Math.round(s.reps)):0xFFFF);
-    w.u16(s.weightKg!=null?Math.min(65534,Math.round(s.weightKg*16)):0xFFFF);
-    w.u8(1);
-    w.u32(fitTime(st));
-    w.u16(unitEnum);
-    w.u16(idx++);
-    t=en;
-  }));
-  const end=t, elapsed=Math.max(1,Math.round((end-start)/1000));
-
-  // lap — local 2
-  w.def(2,19,[[254,2,T_U16],[253,4,T_U32],[2,4,T_U32],[7,4,T_U32],[8,4,T_U32]]);
-  w.hdr(2);
-  w.u16(0);              //254 message_index
-  w.u32(fitTime(end));   //253 timestamp
-  w.u32(fitTime(start)); //2 start_time
-  w.u32(elapsed*1000);   //7 total_elapsed_time
-  w.u32(elapsed*1000);   //8 total_timer_time
-
-  // session — local 3
-  w.def(3,18,[[254,2,T_U16],[253,4,T_U32],[2,4,T_U32],[7,4,T_U32],[8,4,T_U32],[5,1,T_ENUM],[6,1,T_ENUM],[25,2,T_U16],[26,2,T_U16]]);
-  w.hdr(3);
-  w.u16(0);              //254 message_index
-  w.u32(fitTime(end));   //253 timestamp
-  w.u32(fitTime(start)); //2 start_time
-  w.u32(elapsed*1000);   //7 total_elapsed_time
-  w.u32(elapsed*1000);   //8 total_timer_time
-  w.u8(10);              //5 sport = training
-  w.u8(20);              //6 sub_sport = strength_training
-  w.u16(0);              //25 first_lap_index
-  w.u16(1);              //26 num_laps
-
-  // activity — local 4
-  w.def(4,34,[[253,4,T_U32],[0,4,T_U32],[1,2,T_U16],[2,1,T_ENUM],[3,1,T_ENUM],[4,1,T_ENUM],[5,4,T_U32]]);
-  const tzOff=-(new Date(workout.date).getTimezoneOffset())*60;
-  w.hdr(4);
-  w.u32(fitTime(end));        //253 timestamp
-  w.u32(elapsed*1000);        //0 total_timer_time
-  w.u16(1);                   //1 num_sessions
-  w.u8(0);                    //2 type=manual
-  w.u8(26);                   //3 event=activity
-  w.u8(1);                    //4 event_type=stop
-  w.u32(fitTime(start)+tzOff);//5 local_timestamp
-
-  // assemble file
-  const data=w.bytes();
-  const header=[];
-  header.push(14,0x20);
-  // profile version little-endian (2158)
-  header.push(2158&0xFF,(2158>>8)&0xFF);
-  const dl=data.length;
-  header.push(dl&0xFF,(dl>>8)&0xFF,(dl>>16)&0xFF,(dl>>24)&0xFF);
-  header.push(0x2E,0x46,0x49,0x54); // ".FIT"
-  const hcrc=crc16(header);
-  header.push(hcrc&0xFF,(hcrc>>8)&0xFF);
-  const all=header.concat(data);
-  const fcrc=crc16(all);
-  all.push(fcrc&0xFF,(fcrc>>8)&0xFF);
-  return new Uint8Array(all);
 }
 
 /* ---- file saving: works inside the sandboxed artifact (downloads capability)
@@ -1291,47 +1102,6 @@ async function saveFile(name,blob){
     catch(e){if(e&&e.code==="declined")return;}}
   if(!anchorSave(blob,name))toast("Couldn't save file");
 }
-/* minimal STORE-method zip — Garmin Connect accepts .zip imports */
-function crc32(bytes){let c,crc=0xFFFFFFFF;
-  for(let i=0;i<bytes.length;i++){c=(crc^bytes[i])&0xFF;
-    for(let k=0;k<8;k++)c=(c&1)?(0xEDB88320^(c>>>1)):(c>>>1);crc=(crc>>>8)^c;}
-  return (crc^0xFFFFFFFF)>>>0;}
-function makeZip(files){
-  const enc=new TextEncoder();const chunks=[];const central=[];let offset=0;
-  const u16=v=>[v&0xFF,(v>>8)&0xFF];const u32=v=>[v&0xFF,(v>>8)&0xFF,(v>>16)&0xFF,(v>>>24)&0xFF];
-  files.forEach(f=>{
-    const nb=enc.encode(f.name);const crc=crc32(f.bytes);const sz=f.bytes.length;
-    const local=[...u32(0x04034b50),...u16(20),...u16(0),...u16(0),...u16(0),...u16(0),
-      ...u32(crc),...u32(sz),...u32(sz),...u16(nb.length),...u16(0)].concat([...nb]);
-    chunks.push(new Uint8Array(local),f.bytes);
-    central.push([...u32(0x02014b50),...u16(20),...u16(20),...u16(0),...u16(0),...u16(0),...u16(0),
-      ...u32(crc),...u32(sz),...u32(sz),...u16(nb.length),...u16(0),...u16(0),...u16(0),...u16(0),
-      ...u32(0),...u32(offset)].concat([...nb]));
-    offset+=local.length+sz;
-  });
-  const cd=[].concat(...central);const cdStart=offset;
-  const end=[...u32(0x06054b50),...u16(0),...u16(0),...u16(files.length),...u16(files.length),
-    ...u32(cd.length),...u32(cdStart),...u16(0)];
-  chunks.push(new Uint8Array(cd),new Uint8Array(end));
-  const total=chunks.reduce((a,c)=>a+c.length,0);const out=new Uint8Array(total);let p=0;
-  chunks.forEach(c=>{out.set(c,p);p+=c.length;});
-  return out;}
-
-async function exportFit(workout){
-  let bytes;
-  try{bytes=buildFitClean(workout);}catch(e){toast("FIT build failed");return;}
-  const base=`ascend_${new Date(workout.date).toISOString().slice(0,10)}_${tplDisplayName(workout.templateId).replace(/\s+/g,'')}`;
-  const dl=await getDownloads();
-  if(dl){
-    const zip=makeZip([{name:base+".fit",bytes}]);
-    try{await dl.save({filename:base+".zip",data:new Blob([zip])});toast("⌚ Garmin file saved (.zip)");}
-    catch(e){if(!(e&&e.code==="declined"))toast("Export unavailable here");}
-  }else{
-    if(anchorSave(new Blob([bytes]),base+".fit"))toast("⌚ Garmin .FIT downloaded");
-    else toast("Export failed");
-  }
-}
-
 /* ========================= Settings sheet ========================= */
 function openSettings(){
   const sheet=document.createElement("div");sheet.className="scrim";
@@ -1359,14 +1129,8 @@ function openSettings(){
       <button class="btn btn-block" id="restoreBtn">⬆︎ Restore</button>
     </div>
 
-    <div class="section-title" style="margin-top:20px">Garmin (optional)</div>
-    <p>Garmin export is off the critical path now — just log here. When you want sessions on your Garmin profile, tap <b>⌚ Garmin</b> on any session card to save its activity file, then import once at <b>connect.garmin.com</b> → cloud <b>Import Data</b> icon → drop the file. You can do a whole week in one go. It lands as a <b>Strength</b> activity and syncs to your watch &amp; phone.</p>
-    <p style="font-size:12.5px;color:var(--faint)">Fully automatic sync isn't possible from a personal web app — it needs Garmin's partner API or a Connect IQ watch app. If you want true hands-off upload, a tiny personal bridge (using Garmin's unofficial upload API) can push files automatically; ask Claude to set one up.</p>
-
-    <div class="section-title" style="margin-top:20px">Coming soon</div>
-    <div class="setting-row soon"><div><div class="t">🍽 Meal &amp; calorie tracking</div><div class="d">Log food alongside training</div></div><div class="right"><span class="pill">Soon</span></div></div>
-    <div class="setting-row soon"><div><div class="t">⚖️ Bodyweight tracking</div><div class="d">Trend your weight over time</div></div><div class="right"><span class="pill">Soon</span></div></div>
-    <div class="setting-row soon"><div><div class="t">✏️ Rename templates &amp; exercises</div><div class="d">Make the templates yours</div></div><div class="right"><span class="pill">Soon</span></div></div>
+    <div class="section-title" style="margin-top:20px">Health sync</div>
+    <p style="font-size:12.5px;color:var(--faint)">Steps, sleep, HRV &amp; weight are pulled from your ring and Garmin automatically each time you open the app (via Health Connect). Garmin keeps your workout records — Ascend only reads, it never pushes.</p>
 
     <button class="btn btn-primary btn-block" id="closeSheet" style="margin-top:22px">Done</button>
   </div>`;
@@ -1636,8 +1400,8 @@ function renderBody(){
   const sv=bodyVal(viewDate,"steps"), dv=bodyVal(viewDate,"deep"), tv=bodyVal(viewDate,"sleep"), waistv=bodyVal(viewDate,"waist");
   el.innerHTML=dateBar()+`
     <button class="btn btn-cyan btn-block" id="bodyDriveSync">${isNativeApp()?"⟳ Sync from your ring":"☁ Auto-sync from Google Drive"}</button>
-    <button class="btn btn-block" id="bodySync" style="margin-top:8px;background:var(--surface-2);border:1px solid var(--line)">📂 Import files manually</button>
-    <div class="sync-note">${lastSyncText()}</div>
+    ${isNativeApp()?"":'<button class="btn btn-block" id="bodySync" style="margin-top:8px;background:var(--surface-2);border:1px solid var(--line)">📂 Import files manually</button>'}
+    <div class="sync-note">${isNativeApp()?"Pulled from Health Connect automatically each time you open Ascend. Tap to refresh now.":lastSyncText()}</div>
     <div class="section-title">Highlights</div>
     <div class="snap-grid">
       <div class="snap"><div class="k">Weight</div><div class="v tnum">${wShow!=null?round1(fromKg(wShow)):'–'}<small>${unitLbl()}</small></div></div>

@@ -6,12 +6,12 @@
     android:viewportHeight="108">
     <!-- mountain -->
     <path
-        android:fillColor="#F95D9B"
+        android:fillColor="#f3efe6"
         android:pathData="M30,74 L52,40 L62,56 L70,46 L84,74 Z" />
     <path
-        android:fillColor="#39A0CA"
+        android:fillColor="#c7af6b"
         android:pathData="M24,74 L40,50 L52,74 Z" />
     <path
-        android:fillColor="#FFFFFF"
+        android:fillColor="#c7af6b"
         android:pathData="M74,40 m-5,0 a5,5 0 1,0 10,0 a5,5 0 1,0 -10,0" />
 </vector>
