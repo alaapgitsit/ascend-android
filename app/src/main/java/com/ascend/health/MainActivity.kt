@@ -149,6 +149,12 @@ class MainActivity : AppCompatActivity() {
             } catch (e: Exception) {
                 toastJs("Sync failed: ${e.message}")
             }
+            // Exercise sessions (runs, rides, strength, HIIT) — independent of the
+            // body rows, so a failure here never blocks the daily sync.
+            try {
+                val wk = HealthReader.readWorkoutsJson(this@MainActivity, 21)
+                injectWorkouts(wk)
+            } catch (_: Exception) {}
         }
     }
 
@@ -158,6 +164,16 @@ class MainActivity : AppCompatActivity() {
             // json is a valid JS array literal; hand it straight to the web app
             webView.evaluateJavascript(
                 "window.__ascendHealthImport && window.__ascendHealthImport($json);",
+                null
+            )
+        }
+    }
+
+    private fun injectWorkouts(json: String) {
+        if (!webReady) return
+        runOnUiThread {
+            webView.evaluateJavascript(
+                "window.__ascendWorkoutsImport && window.__ascendWorkoutsImport($json);",
                 null
             )
         }

@@ -375,6 +375,69 @@ hr.soft{border:0;border-top:1px solid var(--line);margin:18px 0}
 .scan-frame{position:absolute;inset:16% 12%;border:2px solid rgba(255,255,255,.9);border-radius:12px;box-shadow:0 0 0 2000px rgba(0,0,0,.28)}
 .scan-status{margin-top:12px;font-size:14px;color:var(--muted);text-align:center;min-height:20px}
 .scan-sheet #scanManual{flex:1}
+/* ---- add-food actions (scan / photo / copy) ---- */
+.add-actions{display:flex;gap:8px;margin-bottom:10px}
+.add-actions .btn{flex:1;margin:0}
+.btn-copy{background:var(--surface-2);border:1px solid var(--line);color:var(--fg);font-weight:600;font-size:13.5px}
+.btn-copy:active{border-color:var(--primary)}
+/* ---- food row move ---- */
+.fr-move{background:none;border:0;color:var(--faint);font-size:20px;line-height:1;padding:0 6px;cursor:pointer}
+.fr-move:active{color:var(--primary)}
+.day-list,.meal-move{display:flex;flex-direction:column;gap:6px}
+.meal-move{flex-direction:row;flex-wrap:wrap}
+.day-opt{display:flex;justify-content:space-between;align-items:center;background:var(--surface-2);border:1px solid var(--line);border-radius:11px;padding:11px 13px;color:var(--fg);text-align:left}
+.day-opt small{color:var(--faint)}
+.mm-opt{flex:1 1 42%;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:11px 10px;color:var(--fg);font-weight:600;font-size:13.5px}
+.mm-opt.copy{border-style:dashed}
+.mm-opt:active{border-color:var(--primary)}
+/* ---- portion unit select ---- */
+.unit-sel{background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:9px 10px;font-size:15px;color:var(--fg);min-width:150px}
+/* ---- water card ---- */
+.wtr-goal{font-size:12px;font-weight:600;color:var(--cyan);cursor:pointer}
+.water-card{padding:14px 16px}
+.wtr-top{display:flex;gap:14px;align-items:center}
+.wtr-ring{--p:0;position:relative;width:88px;height:88px;flex:0 0 auto;border-radius:50%;background:conic-gradient(#3b9ec4 calc(var(--p)*1%),var(--surface-3) 0);display:grid;place-items:center}
+.wtr-inner{width:70px;height:70px;border-radius:50%;background:var(--surface);display:flex;flex-direction:column;align-items:center;justify-content:center}
+.wtr-inner b{font-family:var(--font-display);font-weight:800;font-size:19px;color:#3b9ec4;line-height:1}
+.wtr-inner small{font-size:10px;color:var(--faint)}
+.wtr-side{flex:1;min-width:0}
+.wtr-sub{font-size:12.5px;color:var(--muted);margin-bottom:8px}
+.wtr-btns{display:flex;flex-wrap:wrap;gap:6px}
+.wtr-b{flex:1 1 44%;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:8px 6px;color:var(--fg);font-weight:700;font-size:12.5px;display:flex;flex-direction:column;align-items:center;line-height:1.2}
+.wtr-b small{font-weight:500;color:var(--faint);font-size:10px}
+.wtr-b:active{border-color:#3b9ec4}
+.wtr-btns2{display:flex;gap:6px;margin-top:6px}
+.wtr-x{flex:1;background:none;border:0;color:var(--faint);font-size:12.5px;font-weight:600;padding:4px}
+.unit-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.unit-chips button{background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:7px 12px;color:var(--fg);font-size:13px;font-weight:600}
+.unit-chips button.on{background:var(--primary);color:#fff;border-color:var(--primary)}
+/* ---- training source tags ---- */
+.src-tag{font-size:10px;font-weight:800;letter-spacing:.4px;color:var(--cyan);background:var(--surface-2);border-radius:6px;padding:1px 5px;vertical-align:middle}
+.src-tag.g{color:#3b9ec4}
+/* ---- macro mode + presets ---- */
+.seg.macro-mode{width:100%;display:flex;margin:4px 0 10px}
+.seg.macro-mode button{flex:1}
+.preset-list{display:flex;flex-direction:column;gap:5px;max-height:34vh;overflow-y:auto}
+.preset-opt{display:flex;justify-content:space-between;align-items:center;background:var(--surface-2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;color:var(--fg);text-align:left}
+.preset-opt.on{border-color:var(--primary);background:var(--surface)}
+.po-name{font-weight:600;font-size:14px}
+.po-ratio{font-family:var(--font-display);font-size:13px;color:var(--faint)}
+.po-ratio b{font-weight:800}.po-ratio b.c{color:var(--cyan)}.po-ratio b.p{color:#9b7bd6}.po-ratio b.f{color:var(--gold)}
+.sheet.tall{max-height:88vh;overflow-y:auto}
+/* ---- goal card ---- */
+.goal-card{padding:14px 16px;cursor:pointer}
+.gc-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+.gc-k{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--faint);font-weight:800}
+.gc-main{font-size:17px;margin-top:2px}.gc-main b{font-family:var(--font-display);font-weight:800}
+.gc-pct{font-family:var(--font-display);font-weight:800;font-size:24px;color:var(--primary)}
+.gc-bar{height:9px;border-radius:999px;background:var(--surface-3);overflow:hidden}
+.gc-fill{height:100%;background:var(--grad,var(--primary));border-radius:999px}
+.gc-sub{font-size:12px;color:var(--muted);margin-top:7px}
+/* ---- fast completed ring ---- */
+.fast-ring.done{background:conic-gradient(#46a35e calc(var(--p)*1%),var(--surface-3) 0)}
+.fast-ring.done .fast-time{color:#46a35e}
+.fast-since{font-size:12px;color:var(--muted);text-align:center;margin-top:2px}
+.ft-col b.done{color:#46a35e}
 .food-results{margin-top:10px;max-height:40vh;overflow-y:auto;display:flex;flex-direction:column;gap:6px}
 .food-opt{display:flex;align-items:center;gap:10px;background:var(--surface-2);border:1px solid var(--line);border-radius:11px;padding:10px 12px;text-align:left;color:var(--fg)}
 .food-opt:active{border-color:var(--primary)}
@@ -621,8 +684,13 @@ state.tplNames = state.tplNames||{};
 state.food = state.food||{};
 state.body = state.body||{};
 state.settings.calorieBudget = state.settings.calorieBudget||1200;
+state.settings.waterGoal = state.settings.waterGoal||2000;
+state.settings.waterUnit = state.settings.waterUnit||"ml";
 state.fasting = state.fasting || {protocol:"16:8", start:null, history:[]};
 state.fasting.history = state.fasting.history||[];
+state.water = state.water||{};        // dkey -> ml logged
+state.profile = state.profile||{};     // age, heightCm, sex, startKg, goalKg, startDate
+state.garminWorkouts = state.garminWorkouts||[]; // [{start,end,type,kcal,avgHr,maxHr,distanceKm,title}]
 
 const U = ()=>state.settings.unit;
 function toKg(v){return U()==="lb"? v*KG_PER_LB : v;}
@@ -713,14 +781,27 @@ function renderHome(){
   const sleep=bodyVal(viewDate,"sleep");
   const q=QUOTES[Math.floor(Date.now()/864e5)%QUOTES.length];
   const streak=weeklyStreak();
-  const dayWorkouts=state.workouts.filter(x=>sameDay(x.date,viewDate));
+  const titems=trainingItems(viewDate);
   let wBlock;
-  if(dayWorkouts.length){
-    wBlock=dayWorkouts.map(x=>{const vol=Math.round(fromKg(workoutVolumeKg(x)));
-      return `<div class="mini-row"><div class="mini-ic grad"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M3 9v6M6 7v10M18 7v10M21 9v6M6 12h12"/></svg></div><div class="mini-main"><b>${esc(tplDisplayName(x.templateId))}</b><span>${x.exercises.length} exercises · ${vol.toLocaleString()} ${unitLbl()}</span></div></div>`;}).join("");
+  if(titems.length){
+    wBlock=titems.map(t=>{
+      const metr=[];
+      if(t.kcal!=null)metr.push(`${fmtNum(Math.round(t.kcal))} cal`);
+      if(t.avgHr!=null)metr.push(`${Math.round(t.avgHr)} bpm${t.maxHr!=null?' avg':''}`);
+      if(t.kind==="garmin"){
+        if(t.distanceKm!=null)metr.unshift(`${round1(t.distanceKm)} km`);
+        if(t.durMin!=null&&t.distanceKm==null&&t.kcal==null)metr.push(`${t.durMin} min`);
+      }
+      if(t.kind==="ascend"){const base=`${t.ex} exercises · ${t.volume.toLocaleString()} ${unitLbl()}`;metr.unshift(base);}
+      const ic=t.kind==="garmin"?gTypeIcon(t.gtype):gTypeIcon('strength');
+      const tag=t.kind==="ascend"?(t.fused?`<span class="src-tag">＋ Garmin</span>`:``):`<span class="src-tag g">Garmin</span>`;
+      return `<div class="mini-row"><div class="mini-ic grad">${ic}</div><div class="mini-main"><b>${esc(t.name)} ${tag}</b><span>${metr.join(' · ')}</span></div></div>`;
+    }).join("");
   }else{
-    wBlock=`<div class="mini-empty">No workout logged${isToday?' yet':''}. <a data-goto="log">Log one →</a></div>`;
+    wBlock=`<div class="mini-empty">No workout${isToday?' yet':''}. <a data-goto="log">Log one →</a> · runs &amp; rides appear here from Garmin.</div>`;
   }
+  const wml=waterTotal(viewDate),wgoal=state.settings.waterGoal||2000;
+  const wpct=Math.max(0,Math.min(100,Math.round(wml/wgoal*100)));
   const meals=MEALS.map(m=>{const t=mealTotal(viewDate,m);return `<div class="meal-mini"><span>${m}</span><b class="tnum">${t==null?'–':t}</b></div>`;}).join("");
   el.innerHTML=dateBar()+(isToday?fastCard():pastFastCard(viewDate))+`
     <div class="cal-card">
@@ -734,6 +815,17 @@ function renderHome(){
       </div>
       <div class="meal-minis">${meals}</div>
       <button class="btn btn-primary btn-block" data-goto="food" style="margin-top:12px">＋ Log food</button>
+    </div>
+    <div class="section-title">Water <span class="wtr-goal" id="wtrGoal">goal ${fmtNum(wgoal)} ml ✎</span></div>
+    <div class="card water-card">
+      <div class="wtr-top">
+        <div class="wtr-ring" style="--p:${wpct}"><div class="wtr-inner"><b class="tnum">${fmtNum(wml)}</b><small>ml</small></div></div>
+        <div class="wtr-side">
+          <div class="wtr-sub">${wpct}% of ${fmtNum(wgoal)} ml · ${esc(waterFmt(wml))}</div>
+          <div class="wtr-btns">${WATER_CONTAINERS.map(c=>`<button class="wtr-b" data-wadd="${c[1]}">+${c[0]}<small>${c[1]}ml</small></button>`).join("")}</div>
+          <div class="wtr-btns2"><button class="wtr-x" data-wadd="-250">− undo glass</button><button class="wtr-x" id="wtrCustom">Custom…</button></div>
+        </div>
+      </div>
     </div>
     <div class="section-title">Body <button class="sync-btn" data-sync>⟳ Sync</button></div>
     <div class="snap-grid">
@@ -750,6 +842,35 @@ function renderHome(){
   if(isToday){const fb=$("#fastBtn",el);if(fb)fb.addEventListener('click',()=>{state.fasting.start?endFast():startFast();});const fp=$("#fastProto",el);if(fp)fp.addEventListener('click',openFastProto);startFastTick();}else stopFastTick();
   $$('[data-goto]',el).forEach(b=>b.addEventListener('click',()=>setTab(b.dataset.goto)));
   $$('[data-sync]',el).forEach(b=>b.addEventListener('click',syncHealth));
+  $$('[data-wadd]',el).forEach(b=>b.addEventListener('click',()=>{addWater(viewDate,+b.dataset.wadd);renderHome();}));
+  const wc=$("#wtrCustom",el);if(wc)wc.addEventListener('click',openWaterCustom);
+  const wg=$("#wtrGoal",el);if(wg)wg.addEventListener('click',openWaterGoal);
+}
+function openWaterCustom(){
+  const sheet=document.createElement("div");sheet.className="scrim";
+  sheet.innerHTML=`<div class="sheet"><div class="grab"></div><h2>Add water</h2>
+    <div class="goal-row"><label>Amount</label><input id="wAmt" type="number" inputmode="numeric" placeholder="ml"></div>
+    <div class="unit-chips" id="wUnit">${["ml","glass (250ml)","cup (200ml)","oz (30ml)","bottle (500ml)"].map((u,i)=>`<button data-f="${[1,250,200,30,500][i]}" class="${i===0?'on':''}">${u}</button>`).join("")}</div>
+    <button class="btn btn-primary btn-block" id="wSave" style="margin-top:14px">Add</button>
+    <button class="btn btn-ghost btn-block" id="wCancel" style="margin-top:6px;color:var(--faint)">Cancel</button></div>`;
+  document.body.appendChild(sheet);const close=()=>sheet.remove();
+  sheet.addEventListener('click',e=>{if(e.target===sheet)close();});
+  let factor=1;
+  $$('#wUnit button',sheet).forEach(b=>b.addEventListener('click',()=>{factor=+b.dataset.f;$$('#wUnit button',sheet).forEach(x=>x.classList.toggle('on',x===b));}));
+  $("#wCancel",sheet).addEventListener('click',close);
+  $("#wSave",sheet).addEventListener('click',()=>{const v=num($("#wAmt",sheet).value);if(v==null||v<=0){toast("Enter an amount");return;}addWater(viewDate,Math.round(v*factor));close();renderHome();});
+}
+function openWaterGoal(){
+  const sheet=document.createElement("div");sheet.className="scrim";
+  sheet.innerHTML=`<div class="sheet"><div class="grab"></div><h2>Daily water goal</h2>
+    <div class="goal-row"><label>Target (ml)</label><input id="wGoalInp" type="number" inputmode="numeric" value="${state.settings.waterGoal||2000}"></div>
+    <div class="foot-note" style="margin-top:8px">A common guide is ~2,000–2,500 ml a day; adjust to suit you.</div>
+    <button class="btn btn-primary btn-block" id="wGoalSave" style="margin-top:14px">Save goal</button>
+    <button class="btn btn-ghost btn-block" id="wGoalCancel" style="margin-top:6px;color:var(--faint)">Cancel</button></div>`;
+  document.body.appendChild(sheet);const close=()=>sheet.remove();
+  sheet.addEventListener('click',e=>{if(e.target===sheet)close();});
+  $("#wGoalCancel",sheet).addEventListener('click',close);
+  $("#wGoalSave",sheet).addEventListener('click',()=>{const v=num($("#wGoalInp",sheet).value);if(v!=null&&v>0)state.settings.waterGoal=Math.round(v);save();close();renderHome();});
 }
 function tplDisplayName(id){return (state.tplNames[id]) || (TEMPLATES[id]?TEMPLATES[id].name:id);}
 
@@ -1219,6 +1340,9 @@ function openSettings(){
       <div class="right"><div class="stepper"><button id="cMinus">−</button><span class="val tnum" id="cVal">${state.settings.calorieBudget||1200}</span><button id="cPlus">＋</button></div></div>
     </div>
 
+    <button class="btn btn-block" id="profileBtn2" style="margin-top:14px;background:var(--surface-2);border:1px solid var(--line)">👤 Metrics &amp; weight goal</button>
+    <button class="btn btn-block" id="budgetBtn2" style="margin-top:8px;background:var(--surface-2);border:1px solid var(--line)">🎯 Calorie &amp; macro goals</button>
+
     <div class="section-title" style="margin-top:20px">Your data</div>
     <div class="row" style="gap:10px">
       <button class="btn btn-block" id="backupBtn">⬇︎ Back up (.json)</button>
@@ -1248,6 +1372,8 @@ function openSettings(){
     await saveFile(`ascend-backup-${new Date().toISOString().slice(0,10)}.json`,blob);
   });
   $("#restoreBtn",sheet).addEventListener("click",()=>$("#importFile").click());
+  $("#profileBtn2",sheet).addEventListener("click",()=>{close();openProfile();});
+  $("#budgetBtn2",sheet).addEventListener("click",()=>{close();openBudget();});
 }
 $("#healthFile").addEventListener("change",function(){
   const files=Array.from(this.files||[]);this.value="";
@@ -1350,6 +1476,74 @@ function addFood(date,meal,item){const k=dkey(date);state.food[k]=state.food[k]|
 function removeFood(date,meal,idx){const k=dkey(date);if(state.food[k]&&state.food[k][meal]){state.food[k][meal].splice(idx,1);
   if(!state.food[k][meal].length)delete state.food[k][meal];
   if(!Object.keys(state.food[k]).length)delete state.food[k];save();}}
+function foodItem(date,meal,idx){const fd=foodDay(date);return fd&&fd[meal]&&fd[meal][idx]?fd[meal][idx]:null;}
+function moveFood(fromDate,fromMeal,idx,toDate,toMeal,copy){
+  const it=foodItem(fromDate,fromMeal,idx);if(!it)return false;
+  addFood(toDate,toMeal,Object.assign({},it));
+  if(!copy)removeFood(fromDate,fromMeal,idx);
+  return true;}
+function copyMeal(fromDate,meal,toDate,toMeal){
+  const fd=foodDay(fromDate);const items=(fd&&fd[meal])||[];if(!items.length)return 0;
+  items.forEach(it=>addFood(toDate,toMeal,Object.assign({},it)));return items.length;}
+
+/* ---------- Water ---------- */
+function waterTotal(date){return state.water[dkey(date)]||0;}
+function addWater(date,ml){const k=dkey(date);state.water[k]=Math.max(0,(state.water[k]||0)+ml);if(!state.water[k])delete state.water[k];save();}
+function setWater(date,ml){const k=dkey(date);if(ml>0)state.water[k]=Math.round(ml);else delete state.water[k];save();}
+const WATER_CONTAINERS=[["½ glass",125],["Glass",250],["Bottle",500],["Cup",200]];
+function waterFmt(ml){ // respect display unit
+  const u=state.settings.waterUnit||"ml";
+  if(u==="glass")return round1(ml/250)+" glass"+(Math.abs(ml/250-1)<1e-9?"":"es");
+  if(u==="cup")return round1(ml/240)+" cup"+(Math.abs(ml/240-1)<1e-9?"":"s");
+  if(u==="oz")return round1(ml/29.5735)+" oz";
+  return fmtNum(ml)+" ml";}
+
+/* ---------- Garmin / Ascend training fusion ---------- */
+const FUSE_MS=10*60*1000; // ±10 min tolerance
+function garminOn(date){const k=dkey(date);return (state.garminWorkouts||[]).filter(g=>dkey(g.start)===k||dkey(g.end)===k);}
+function gwOverlapsAscend(g,w){ // within ±10 min of the Ascend session's window
+  const ws=new Date(w.date).getTime();
+  const wEnd=ws+((w.durationSec||45*60)*1000);
+  return (g.start<=wEnd+FUSE_MS)&&(g.end>=ws-FUSE_MS);}
+function trainingItems(date){
+  // Build the unified list the Today card shows: Ascend workouts (fused with
+  // a matching Garmin Strength/HIIT session when within ±10 min), plus
+  // standalone Garmin sessions (runs, rides, and unmatched strength/HIIT).
+  const out=[];
+  const gw=garminOn(date).slice();
+  const used=new Set();
+  const asc=state.workouts.filter(w=>sameDay(w.date,date));
+  asc.forEach(w=>{
+    // fuse with the nearest strength/HIIT garmin session in range
+    let best=-1,bestGap=Infinity;
+    gw.forEach((g,gi)=>{if(used.has(gi))return;if(g.type!=="strength"&&g.type!=="hiit")return;
+      if(gwOverlapsAscend(g,w)){const gap=Math.abs(g.start-new Date(w.date).getTime());if(gap<bestGap){bestGap=gap;best=gi;}}});
+    const g=best>=0?gw[best]:null;if(g)used.add(best);
+    out.push({kind:"ascend",name:tplDisplayName(w.templateId),ex:w.exercises.length,
+      volume:Math.round(fromKg(workoutVolumeKg(w))),when:new Date(w.date).getTime(),
+      kcal:g?g.kcal:null,avgHr:g?g.avgHr:null,maxHr:g?g.maxHr:null,fused:!!g});
+  });
+  gw.forEach((g,gi)=>{if(used.has(gi))return;
+    out.push({kind:"garmin",gtype:g.type,name:g.title||gTypeName(g.type),when:g.start,
+      kcal:g.kcal,avgHr:g.avgHr,maxHr:g.maxHr,distanceKm:g.distanceKm,durMin:Math.round((g.end-g.start)/60000)});});
+  out.sort((a,b)=>a.when-b.when);
+  return out;}
+function gTypeName(t){return ({run:"Running",bike:"Cycling",strength:"Strength",hiit:"HIIT",walk:"Walk",swim:"Swim"})[t]||"Workout";}
+function gTypeIcon(t){ // simple inline svg stroke paths
+  const p=({run:'<path d="M13 4a1 1 0 100 2 1 1 0 000-2zM7 20l3-5 2 2 1 3M10 15l-1-4 3-2 3 2 2-1"/>',
+    bike:'<circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M6 17l4-8h4l2 4M9 9h4"/>',
+    strength:'<path d="M3 9v6M6 7v10M18 7v10M21 9v6M6 12h12"/>',
+    hiit:'<path d="M13 2 4 14h7l-1 8 9-12h-7z"/>'})[t]||'<path d="M3 9v6M6 7v10M18 7v10M21 9v6M6 12h12"/>';
+  return `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;}
+
+/* ---------- Profile / goal weight ---------- */
+function profileGoalProgress(){
+  const p=state.profile||{};const start=p.startKg,goal=p.goalKg;
+  const cur=latestVal("weight").val;
+  if(start==null||goal==null||cur==null)return null;
+  const total=start-goal, done=start-cur;
+  const pct=total!==0?Math.max(0,Math.min(100,Math.round(done/total*100))):0;
+  return {start,goal,cur,pct,remaining:round1(cur-goal)};}
 
 function dateBar(){
   const isToday=sameDay(viewDate,Date.now());
@@ -1374,7 +1568,7 @@ function renderFood(){
   const histOnly=!fd && h && h.kcal!=null;
   const mealsHtml=MEALS.map(m=>{
     const items=(fd&&fd[m])||[];
-    const rows=items.map((it,idx)=>`<div class="food-row"><div class="fr-main"><b>${esc(it.n)}</b><span>${esc(it.a||'')}</span></div><div class="fr-k tnum">${it.k}</div><button class="fr-del" data-del-food="${m}::${idx}" aria-label="Remove">×</button></div>`).join("");
+    const rows=items.map((it,idx)=>`<div class="food-row"><div class="fr-main"><b>${esc(it.n)}</b><span>${esc(it.a||'')}</span></div><div class="fr-k tnum">${it.k}</div><button class="fr-move" data-move-food="${m}::${idx}" aria-label="Move or copy">⋯</button><button class="fr-del" data-del-food="${m}::${idx}" aria-label="Remove">×</button></div>`).join("");
     const mt=items.reduce((a,it)=>a+(+it.k||0),0);
     return `<div class="meal-sec"><div class="meal-head"><span>${m}</span><b class="tnum">${Math.round(mt)}</b></div>${rows}<button class="add-food" data-add-food="${m}">＋ Add to ${m.toLowerCase()}</button></div>`;
   }).join("");
@@ -1395,13 +1589,21 @@ function renderFood(){
   wireDateBar(el);
   $$('[data-add-food]',el).forEach(b=>b.addEventListener('click',()=>openAddFood(b.dataset.addFood)));
   $$('[data-del-food]',el).forEach(b=>b.addEventListener('click',()=>{const parts=b.dataset.delFood.split("::");removeFood(viewDate,parts[0],+parts[1]);renderFood();}));
+  $$('[data-move-food]',el).forEach(b=>b.addEventListener('click',()=>{const parts=b.dataset.moveFood.split("::");openFoodActions(parts[0],+parts[1]);}));
   const be=$("#budEdit",el);if(be)be.addEventListener('click',openBudget);
 }
 function openAddFood(meal){
   const sheet=document.createElement("div");sheet.className="scrim";
   sheet.innerHTML=`<div class="sheet"><div class="grab"></div>
     <h2>Add to ${meal}</h2>
-    <button class="btn btn-scan btn-block" id="scanBtn"><span class="scan-ico">▣</span> Scan barcode</button>
+    <div class="add-actions">
+      <button class="btn btn-scan" id="scanBtn"><span class="scan-ico">▣</span> Scan barcode</button>
+      <button class="btn btn-scan" id="photoBtn"><span class="scan-ico">◉</span> Photo</button>
+    </div>
+    <div class="add-actions">
+      <button class="btn btn-copy" id="copyYday">⎘ Yesterday's ${meal.toLowerCase()}</button>
+      <button class="btn btn-copy" id="copyOther">⎘ From a day…</button>
+    </div>
     <input class="food-search" id="foodSearch" placeholder="Search your foods…" autocomplete="off">
     <div class="food-results" id="foodResults"></div>
     <div class="section-title" style="margin-top:16px">Quick custom</div>
@@ -1428,6 +1630,13 @@ function openAddFood(meal){
   draw("");
   $("#foodSearch",sheet).addEventListener('input',e=>draw(e.target.value));
   $("#scanBtn",sheet).addEventListener('click',()=>openScanner(meal,sheet,close,draw));
+  $("#photoBtn",sheet).addEventListener('click',()=>openFoodPhoto(meal,sheet,close,draw));
+  $("#copyYday",sheet).addEventListener('click',()=>{
+    const from=startOfDay(+viewDate-864e5);
+    const n=copyMeal(from,meal,viewDate,meal);
+    if(n){toast(`Copied ${n} item${n>1?'s':''} from yesterday`);close();renderFood();}
+    else toast(`Nothing in yesterday's ${meal.toLowerCase()}`);});
+  $("#copyOther",sheet).addEventListener('click',()=>openCopyFromDay(meal,sheet,close));
   $("#cfAdd",sheet).addEventListener('click',()=>{
     const n=($("#cfName",sheet).value||"").trim();const k=num($("#cfKcal",sheet).value);
     if(!n||k==null){toast("Name and calories needed");return;}
@@ -1435,27 +1644,73 @@ function openAddFood(meal){
     toast("Added "+n);close();renderFood();
   });
 }
+// Parse a base serving string ("100 g", "1 cup (240 g)", "2 slices (56 g)") into
+// a reference amount in g/ml when possible, so weight/volume units can scale.
+function parseServing(a){
+  a=(""+(a||"")).toLowerCase();
+  // prefer a gram/ml figure in parentheses, else the first number+unit
+  let m=a.match(/(\d+(?:\.\d+)?)\s*(g|ml)\b/);
+  if(m)return {base:+m[1],unit:m[2]};
+  m=a.match(/(\d+(?:\.\d+)?)\s*(oz|ounce)/);if(m)return {base:+m[1]*28.35,unit:'g'};
+  return null;
+}
+const MEASURE_UNITS={g:{t:'g',k:1},ml:{t:'ml',k:1},oz:{t:'g',k:28.35},cup:{t:'ml',k:240},tbsp:{t:'ml',k:15},tsp:{t:'ml',k:5}};
+const SIZE_MULT={serving:1,small:0.7,medium:1,large:1.4,half:0.5,slice:1,piece:1,handful:0.5};
+const DRINK_PRESETS={"can 330ml":330,"can 220ml":220,"can 250ml":250,"bottle 330ml":330,"bottle 500ml":500,"bottle 750ml":750};
 function showPortion(food,meal,sheet,close,draw){
   const results=$("#foodResults",sheet);
   const search=$("#foodSearch",sheet);if(search)search.style.display="none";
-  const calc=q=>({k:Math.round(food.k*q),p:round1((food.p||0)*q),c:round1((food.c||0)*q),f:round1((food.f||0)*q)});
-  const show=q=>{const c=calc(q);const el=$("#portionCalc",sheet);if(el)el.innerHTML=`<b>${c.k}</b> cal · C${c.c} · P${c.p} · F${c.f}`;};
+  const ref=parseServing(food.a); // {base, unit} or null
+  // Build the unit menu appropriate to this food.
+  const groups=[];
+  groups.push(['Serving','serving']);
+  if(ref){ // weight/volume scaling available
+    if(ref.unit==='g'){groups.push(['Grams (g)','u:g'],['Ounces (oz)','u:oz']);}
+    else{groups.push(['Millilitres (ml)','u:ml'],['Cups','u:cup'],['Tbsp','u:tbsp'],['Tsp','u:tsp']);}
+  }
+  groups.push(['Small','small'],['Medium','medium'],['Large','large'],['Half','half'],['Slice','slice'],['Piece','piece']);
+  if(ref&&ref.unit==='ml'){Object.keys(DRINK_PRESETS).forEach(d=>groups.push([d.replace(/^\w/,c=>c.toUpperCase()),'d:'+d]));}
+  const optHtml=groups.map(g=>`<option value="${g[1]}">${g[0]}</option>`).join("");
+
+  // multiplier for a given unit value + quantity
+  const multFor=(unit,qty)=>{
+    qty=(isFinite(qty)&&qty>0)?qty:1;
+    if(unit==='serving')return qty;
+    if(unit.startsWith('u:')){const mu=MEASURE_UNITS[unit.slice(2)];if(!mu||!ref)return qty;return (qty*mu.k)/ref.base;}
+    if(unit.startsWith('d:')){const ml=DRINK_PRESETS[unit.slice(2)];if(!ref)return qty;return (qty*ml)/ref.base;}
+    return (SIZE_MULT[unit]!=null?SIZE_MULT[unit]:1)*qty;
+  };
+  const amtLabel=(unit,qty)=>{
+    if(unit==='serving')return qty===1?(food.a||'1 serving'):(qty+"× "+(food.a||'serving'));
+    if(unit.startsWith('u:'))return qty+" "+unit.slice(2);
+    if(unit.startsWith('d:'))return (qty===1?'':qty+"× ")+unit.slice(2);
+    const sz={small:'small',medium:'medium',large:'large',half:'½',slice:'slice',piece:'piece'}[unit]||unit;
+    return qty===1?sz:(qty+"× "+sz);
+  };
+  const calc=mult=>({k:Math.round(food.k*mult),p:round1((food.p||0)*mult),c:round1((food.c||0)*mult),f:round1((food.f||0)*mult)});
+
   results.innerHTML=`<div class="portion">
     <div class="portion-name">${esc(food.n)}</div>
-    <div class="portion-sub">Base serving: ${esc(food.a||'1 serving')} = ${food.k} cal</div>
-    <div class="portion-row"><span>Servings</span><div class="qty"><button data-q="d">−</button><input id="qtyInp" type="number" inputmode="decimal" value="1" step="0.5"><button data-q="u">＋</button></div></div>
+    <div class="portion-sub">Base serving: ${esc(food.a||'1 serving')} = ${food.k} cal${ref?` · ${fmtNum(ref.base)}${ref.unit}`:''}</div>
+    <div class="portion-row"><span>Measure</span><select id="unitSel" class="unit-sel">${optHtml}</select></div>
+    <div class="portion-row"><span id="qtyLbl">Servings</span><div class="qty"><button data-q="d">−</button><input id="qtyInp" type="number" inputmode="decimal" value="1" step="0.5"><button data-q="u">＋</button></div></div>
     <div class="portion-calc" id="portionCalc"></div>
     <div class="cf-row"><button class="btn btn-ghost btn-block" id="portionBack" style="color:var(--muted)">‹ Back</button><button class="btn btn-primary btn-block" id="portionAdd">Add</button></div>
   </div>`;
-  const qi=$("#qtyInp",sheet);
+  const qi=$("#qtyInp",sheet),usel=$("#unitSel",sheet),qlbl=$("#qtyLbl",sheet);
   const getq=()=>{const q=parseFloat(qi.value);return (isFinite(q)&&q>0)?q:1;};
-  show(getq());
-  qi.addEventListener('input',()=>show(getq()));
-  $$('.portion [data-q]',sheet).forEach(btn=>btn.addEventListener('click',()=>{let q=getq();q=btn.dataset.q==='u'?q+0.5:Math.max(0.5,q-0.5);qi.value=q;show(q);}));
+  const unit=()=>usel.value;
+  const defaultQty=u=>{if(u.startsWith('u:')){const k=u.slice(2);return k==='g'||k==='ml'?(ref?Math.round(ref.base):100):1;}return 1;};
+  const step=u=>{if(u.startsWith('u:')){const k=u.slice(2);return (k==='g'||k==='ml')?10:1;}return 0.5;};
+  const show=()=>{const m=multFor(unit(),getq());const c=calc(m);const el=$("#portionCalc",sheet);if(el)el.innerHTML=`<b>${c.k}</b> cal · C${c.c} · P${c.p} · F${c.f}`;};
+  const syncLbl=()=>{const u=unit();qlbl.textContent=u==='serving'?'Servings':(u.startsWith('u:')?u.slice(2):(u.startsWith('d:')?'How many':'Quantity'));qi.step=step(u);};
+  usel.addEventListener('change',()=>{qi.value=defaultQty(unit());syncLbl();show();});
+  qi.addEventListener('input',show);
+  $$('.portion [data-q]',sheet).forEach(btn=>btn.addEventListener('click',()=>{const s=step(unit());let q=getq();q=btn.dataset.q==='u'?q+s:Math.max(s,q-s);qi.value=round1(q);show();}));
+  syncLbl();show();
   $("#portionBack",sheet).addEventListener('click',()=>{if(search)search.style.display="";draw(search?search.value:"");});
-  $("#portionAdd",sheet).addEventListener('click',()=>{const q=getq();const c=calc(q);
-    const amt=(q===1?(food.a||''):(q+"× "+(food.a||'serving')));
-    addFood(viewDate,meal,{n:food.n,a:amt,k:c.k,p:c.p,c:c.c,f:c.f});toast("Added "+food.n);close();renderFood();});
+  $("#portionAdd",sheet).addEventListener('click',()=>{const m=multFor(unit(),getq());const c=calc(m);
+    addFood(viewDate,meal,{n:food.n,a:amtLabel(unit(),getq()),k:c.k,p:c.p,c:c.c,f:c.f});toast("Added "+food.n);close();renderFood();});
 }
 // ---- Barcode scanner → Open Food Facts lookup --------------------------
 let _zxingP=null;
@@ -1563,35 +1818,220 @@ function openScanner(meal,addSheet,closeAdd,draw){
   };
   startCam();
 }
+function openCopyFromDay(meal,addSheet,closeAdd){
+  // list recent days (back 14) that have food logged for this meal
+  const opts=[];
+  for(let i=1;i<=14;i++){const d=startOfDay(+viewDate-i*864e5);const fd=foodDay(d);
+    const items=fd&&fd[meal];if(items&&items.length)opts.push({d,n:items.length});}
+  const sheet=document.createElement("div");sheet.className="scrim";
+  sheet.innerHTML=`<div class="sheet"><div class="grab"></div><h2>Copy ${meal.toLowerCase()} from…</h2>
+    ${opts.length?`<div class="day-list">${opts.map((o,i)=>`<button class="day-opt" data-i="${i}"><span>${esc(fmtFullDate(o.d))}</span><small>${o.n} item${o.n>1?'s':''}</small></button>`).join("")}</div>`:`<div class="mini-empty">No ${meal.toLowerCase()} logged in the last 14 days.</div>`}
+    <button class="btn btn-ghost btn-block" id="copyClose" style="margin-top:10px;color:var(--faint)">Cancel</button></div>`;
+  document.body.appendChild(sheet);const close=()=>sheet.remove();
+  sheet.addEventListener('click',e=>{if(e.target===sheet)close();});
+  $("#copyClose",sheet).addEventListener('click',close);
+  $$('.day-opt',sheet).forEach(b=>b.addEventListener('click',()=>{const o=opts[+b.dataset.i];
+    const n=copyMeal(o.d,meal,viewDate,meal);close();closeAdd();toast(`Copied ${n} item${n>1?'s':''}`);renderFood();}));
+}
+function openFoodActions(meal,idx){
+  const it=foodItem(viewDate,meal,idx);if(!it)return;
+  const sheet=document.createElement("div");sheet.className="scrim";
+  const otherMeals=MEALS.filter(m=>m!==meal);
+  sheet.innerHTML=`<div class="sheet"><div class="grab"></div><h2>${esc(it.n)}</h2>
+    <div class="section-title">Move to another meal (today)</div>
+    <div class="meal-move">${otherMeals.map(m=>`<button class="mm-opt" data-meal="${m}">${m}</button>`).join("")}</div>
+    <div class="section-title" style="margin-top:12px">Copy to another meal</div>
+    <div class="meal-move">${MEALS.map(m=>`<button class="mm-opt copy" data-copymeal="${m}">${m}</button>`).join("")}</div>
+    <div class="section-title" style="margin-top:12px">Other days</div>
+    <div class="meal-move">
+      <button class="mm-opt" data-day="-1">Move to yesterday</button>
+      <button class="mm-opt copy" data-copyday="1">Copy to tomorrow</button>
+      <button class="mm-opt" id="moveToDate">Move to date…</button>
+    </div>
+    <button class="btn btn-ghost btn-block" id="faClose" style="margin-top:12px;color:var(--faint)">Cancel</button></div>`;
+  document.body.appendChild(sheet);const close=()=>sheet.remove();
+  sheet.addEventListener('click',e=>{if(e.target===sheet)close();});
+  $("#faClose",sheet).addEventListener('click',close);
+  $$('[data-meal]',sheet).forEach(b=>b.addEventListener('click',()=>{moveFood(viewDate,meal,idx,viewDate,b.dataset.meal,false);close();toast(`Moved to ${b.dataset.meal}`);renderFood();}));
+  $$('[data-copymeal]',sheet).forEach(b=>b.addEventListener('click',()=>{moveFood(viewDate,meal,idx,viewDate,b.dataset.copymeal,true);close();toast(`Copied to ${b.dataset.copymeal}`);renderFood();}));
+  $$('[data-day]',sheet).forEach(b=>b.addEventListener('click',()=>{const to=startOfDay(+viewDate+(+b.dataset.day)*864e5);moveFood(viewDate,meal,idx,to,meal,false);close();toast("Moved to "+fmtFullDate(to));renderFood();}));
+  $$('[data-copyday]',sheet).forEach(b=>b.addEventListener('click',()=>{const to=startOfDay(+viewDate+(+b.dataset.copyday)*864e5);moveFood(viewDate,meal,idx,to,meal,true);close();toast("Copied to "+fmtFullDate(to));renderFood();}));
+  $("#moveToDate",sheet).addEventListener('click',()=>{
+    const inp=document.createElement('input');inp.type='date';inp.value=dkey(viewDate);
+    inp.style.position='fixed';inp.style.left='-9999px';document.body.appendChild(inp);
+    inp.addEventListener('change',()=>{const v=inp.value;document.body.removeChild(inp);if(!v)return;
+      const to=new Date(v+"T12:00");moveFood(viewDate,meal,idx,to,meal,false);close();toast("Moved to "+fmtFullDate(to));renderFood();});
+    inp.click();});
+}
+// Food photo capture — captures an image for the log. True auto-identification
+// needs a vision service the offline app can't run, so this captures the photo
+// and lets you confirm the item quickly (thumbnail is kept with the entry).
+function openFoodPhoto(meal,addSheet,closeAdd,draw){
+  const native=isNativeApp();
+  const sheet=document.createElement("div");sheet.className="scrim";
+  sheet.innerHTML=`<div class="sheet scan-sheet"><div class="grab"></div>
+    <h2>Photo a meal</h2>
+    <div class="scan-stage"><video id="pVid" playsinline muted></video><canvas id="pCanvas" hidden></canvas><img id="pShot" hidden></div>
+    <div class="scan-status" id="pStatus">Frame the plate, then tap Capture.</div>
+    <div class="cf-row" id="pCapRow"><button class="btn btn-primary btn-block" id="pCap">◉ Capture</button></div>
+    <div id="pConfirm" hidden>
+      <div class="goal-row"><label>What is it?</label><input id="pName" placeholder="e.g. Chicken salad"></div>
+      <div class="cf-row"><input id="pKcal" type="number" inputmode="numeric" placeholder="Calories"><input id="pAmt" placeholder="Portion (opt)"></div>
+      <div class="cf-row"><input id="pP" type="number" inputmode="decimal" placeholder="P g"><input id="pC" type="number" inputmode="decimal" placeholder="C g"><input id="pF" type="number" inputmode="decimal" placeholder="F g"></div>
+      <div class="cf-row"><button class="btn btn-ghost btn-block" id="pRetake" style="color:var(--muted)">↺ Retake</button><button class="btn btn-primary btn-block" id="pAdd">Add to ${meal}</button></div>
+    </div>
+    <button class="btn btn-ghost btn-block" id="pClose" style="margin-top:8px;color:var(--faint)">Cancel</button>
+  </div>`;
+  document.body.appendChild(sheet);
+  const vid=$("#pVid",sheet),cv=$("#pCanvas",sheet),shot=$("#pShot",sheet),status=$("#pStatus",sheet);
+  let stream=null,shotData=null;
+  const stop=()=>{try{if(stream)stream.getTracks().forEach(t=>t.stop());}catch(e){}};
+  const close=()=>{stop();sheet.remove();};
+  sheet.addEventListener('click',e=>{if(e.target===sheet)close();});
+  $("#pClose",sheet).addEventListener('click',close);
+  const start=()=>{
+    if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){status.textContent=native?"Camera unavailable on this device.":"Camera needs the installed app.";return;}
+    navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:"environment"}}}).then(s=>{stream=s;vid.srcObject=s;vid.play();})
+      .catch(err=>{status.textContent=(err&&err.name==='NotAllowedError')?"Camera permission denied.":(native?"Couldn't open the camera.":"Camera needs the installed app.");});};
+  $("#pCap",sheet).addEventListener('click',()=>{
+    if(!stream){status.textContent="No camera — fill the details below.";vid.hidden=true;$("#pConfirm",sheet).hidden=false;$("#pCapRow",sheet).hidden=true;return;}
+    const w=vid.videoWidth||640,h=vid.videoHeight||480;cv.width=w;cv.height=h;
+    cv.getContext('2d').drawImage(vid,0,0,w,h);
+    try{shotData=cv.toDataURL('image/jpeg',0.6);}catch(e){shotData=null;}
+    if(shotData){shot.src=shotData;shot.hidden=false;}vid.hidden=true;stop();
+    $("#pConfirm",sheet).hidden=false;$("#pCapRow",sheet).hidden=true;
+    status.textContent="Confirm the item to log it.";});
+  $("#pRetake",sheet).addEventListener('click',()=>{shot.hidden=true;vid.hidden=false;$("#pConfirm",sheet).hidden=true;$("#pCapRow",sheet).hidden=false;status.textContent="Frame the plate, then tap Capture.";start();});
+  $("#pAdd",sheet).addEventListener('click',()=>{
+    const n=($("#pName",sheet).value||"").trim();const k=num($("#pKcal",sheet).value);
+    if(!n||k==null){toast("Add a name and calories");return;}
+    const item={n:n,a:($("#pAmt",sheet).value||"photo").trim(),k:Math.round(k),p:num($("#pP",sheet).value)||0,c:num($("#pC",sheet).value)||0,f:num($("#pF",sheet).value)||0};
+    if(shotData)item.photo=shotData;
+    addFood(viewDate,meal,item);close();closeAdd();toast("Added "+n);renderFood();});
+  start();
+}
+// Diet presets — carbs : protein : fat as % of calories (from MyNetDiary set)
+const DIET_PRESETS=[
+  ["Balanced / Default",45,20,35],["Mediterranean",50,15,35],["Moderate Low-Carb",30,30,40],
+  ["Low-Carb",20,40,40],["Keto / Very Low-Carb",5,20,75],["DASH",55,18,27],["Low-Fat",50,20,30],
+  ["Atkins",10,30,60],["OmniHeart",48,25,27],["TLC",55,15,30],["Very Low-Fat",70,20,10],
+  ["Zone",40,30,30],["No Carb / Carnivore",1,29,70]];
+function gramsFromPct(bud,c,p,f){return {c:Math.round(bud*c/100/4),p:Math.round(bud*p/100/4),f:Math.round(bud*f/100/9)};}
 function openBudget(){
   const bud=state.settings.calorieBudget||1200;
-  const g=state.settings.macros||{p:Math.round(bud*0.3/4),c:Math.round(bud*0.4/4),f:Math.round(bud*0.3/9)};
+  const g=state.settings.macros||gramsFromPct(bud,40,30,30);
   const sheet=document.createElement("div");sheet.className="scrim";
-  sheet.innerHTML=`<div class="sheet"><div class="grab"></div><h2>Calorie &amp; macro goals</h2>
+  sheet.innerHTML=`<div class="sheet tall"><div class="grab"></div><h2>Calorie &amp; macro goals</h2>
     <div class="goal-row"><label>Daily calories</label><input id="budInp" type="number" inputmode="numeric" value="${bud}"></div>
-    <div class="section-title" style="margin-top:14px">Macro targets (grams)</div>
-    <div class="goal-row"><label><span class="dotc c"></span>Carbs</label><input id="gC" type="number" inputmode="numeric" value="${g.c}"></div>
-    <div class="goal-row"><label><span class="dotc p"></span>Protein</label><input id="gP" type="number" inputmode="numeric" value="${g.p}"></div>
-    <div class="goal-row"><label><span class="dotc f"></span>Fat</label><input id="gF" type="number" inputmode="numeric" value="${g.f}"></div>
+
+    <div class="section-title" style="margin-top:14px">Macro split</div>
+    <div class="seg macro-mode" id="macroMode"><button data-m="pct" class="on">By % of calories</button><button data-m="g">By grams</button></div>
+
+    <div id="pctPane">
+      <div class="goal-row"><label><span class="dotc c"></span>Carbs %</label><input id="pC" type="number" inputmode="numeric"></div>
+      <div class="goal-row"><label><span class="dotc p"></span>Protein %</label><input id="pP" type="number" inputmode="numeric"></div>
+      <div class="goal-row"><label><span class="dotc f"></span>Fat %</label><input id="pF" type="number" inputmode="numeric"></div>
+    </div>
+    <div id="gPane" hidden>
+      <div class="goal-row"><label><span class="dotc c"></span>Carbs g</label><input id="gC" type="number" inputmode="numeric" value="${g.c}"></div>
+      <div class="goal-row"><label><span class="dotc p"></span>Protein g</label><input id="gP" type="number" inputmode="numeric" value="${g.p}"></div>
+      <div class="goal-row"><label><span class="dotc f"></span>Fat g</label><input id="gF" type="number" inputmode="numeric" value="${g.f}"></div>
+    </div>
     <div class="goal-calc" id="goalCalc"></div>
+
+    <div class="section-title" style="margin-top:14px">Preset diets <small style="font-weight:600;color:var(--faint)">C : P : F</small></div>
+    <div class="preset-list" id="presetList">${DIET_PRESETS.map((d,i)=>`<button class="preset-opt" data-i="${i}"><span class="po-name">${d[0]}</span><span class="po-ratio"><b class="c">${d[1]}</b>:<b class="p">${d[2]}</b>:<b class="f">${d[3]}</b></span></button>`).join("")}</div>
+
     <button class="btn btn-primary btn-block" id="budSave" style="margin-top:14px">Save goals</button>
     <button class="btn btn-ghost btn-block" id="budClear" style="margin-top:8px;color:var(--faint)">Clear macro targets</button>
     <button class="btn btn-ghost btn-block" id="budCancel" style="margin-top:4px;color:var(--faint)">Cancel</button></div>`;
   document.body.appendChild(sheet);const close=()=>sheet.remove();
   sheet.addEventListener('click',e=>{if(e.target===sheet)close();});
-  const recalc=()=>{const p=num($("#gP",sheet).value)||0,c=num($("#gC",sheet).value)||0,f=num($("#gF",sheet).value)||0;
-    const cal=Math.round(p*4+c*4+f*9);const bud2=num($("#budInp",sheet).value)||0;
-    const pP=cal?Math.round(p*4/cal*100):0,pC=cal?Math.round(c*4/cal*100):0,pF=cal?Math.round(f*9/cal*100):0;
-    $("#goalCalc",sheet).innerHTML=`Macros add up to <b>${cal}</b> cal (C ${pC}% · P ${pP}% · F ${pF}%)${bud2&&Math.abs(cal-bud2)>40?` <span class="warn">— ${cal>bud2?'over':'under'} ${bud2} budget</span>`:''}`;};
-  ['#budInp','#gP','#gC','#gF'].forEach(s=>$(s,sheet).addEventListener('input',recalc));recalc();
+  let mode="pct";
+  const curBud=()=>num($("#budInp",sheet).value)||bud;
+  // seed % from existing grams
+  const seedPct=()=>{const b=curBud();const cg=num($("#gC",sheet).value)||0,pg=num($("#gP",sheet).value)||0,fg=num($("#gF",sheet).value)||0;
+    const cal=cg*4+pg*4+fg*9||b;
+    $("#pC",sheet).value=Math.round(cg*4/cal*100);$("#pP",sheet).value=Math.round(pg*4/cal*100);$("#pF",sheet).value=Math.round(fg*9/cal*100);};
+  seedPct();
+  const recalc=()=>{
+    const b=curBud();let cg,pg,fg;
+    if(mode==="pct"){const c=num($("#pC",sheet).value)||0,p=num($("#pP",sheet).value)||0,f=num($("#pF",sheet).value)||0;
+      const gg=gramsFromPct(b,c,p,f);cg=gg.c;pg=gg.p;fg=gg.f;
+      $("#gC",sheet).value=cg;$("#gP",sheet).value=pg;$("#gF",sheet).value=fg;
+      const sum=c+p+f;
+      $("#goalCalc",sheet).innerHTML=`= C <b>${cg}g</b> · P <b>${pg}g</b> · F <b>${fg}g</b>${Math.abs(sum-100)>1?` <span class="warn">— percentages add to ${sum}%, not 100%</span>`:''}`;
+    }else{cg=num($("#gC",sheet).value)||0;pg=num($("#gP",sheet).value)||0;fg=num($("#gF",sheet).value)||0;
+      const cal=Math.round(cg*4+pg*4+fg*9);
+      const pC=cal?Math.round(cg*4/cal*100):0,pP=cal?Math.round(pg*4/cal*100):0,pF=cal?Math.round(fg*9/cal*100):0;
+      $("#pC",sheet).value=pC;$("#pP",sheet).value=pP;$("#pF",sheet).value=pF;
+      $("#goalCalc",sheet).innerHTML=`Macros = <b>${cal}</b> cal (C ${pC}% · P ${pP}% · F ${pF}%)${Math.abs(cal-b)>40?` <span class="warn">— ${cal>b?'over':'under'} ${b} cal budget</span>`:''}`;}
+  };
+  $$('#macroMode button',sheet).forEach(b=>b.addEventListener('click',()=>{mode=b.dataset.m;
+    $$('#macroMode button',sheet).forEach(x=>x.classList.toggle('on',x===b));
+    $("#pctPane",sheet).hidden=mode!=="pct";$("#gPane",sheet).hidden=mode!=="g";recalc();}));
+  ['#budInp','#pC','#pP','#pF','#gC','#gP','#gF'].forEach(s=>$(s,sheet).addEventListener('input',recalc));
+  $$('.preset-opt',sheet).forEach(b=>b.addEventListener('click',()=>{const d=DIET_PRESETS[+b.dataset.i];
+    mode="pct";$$('#macroMode button',sheet).forEach(x=>x.classList.toggle('on',x.dataset.m==="pct"));
+    $("#pctPane",sheet).hidden=false;$("#gPane",sheet).hidden=true;
+    $("#pC",sheet).value=d[1];$("#pP",sheet).value=d[2];$("#pF",sheet).value=d[3];
+    $$('.preset-opt',sheet).forEach(x=>x.classList.toggle('on',x===b));recalc();}));
+  recalc();
   $("#budCancel",sheet).addEventListener('click',close);
   $("#budClear",sheet).addEventListener('click',()=>{delete state.settings.macros;const v=num($("#budInp",sheet).value);if(v!=null&&v>0)state.settings.calorieBudget=Math.round(v);save();close();renderActive();});
   $("#budSave",sheet).addEventListener('click',()=>{const v=num($("#budInp",sheet).value);
     if(v!=null&&v>0)state.settings.calorieBudget=Math.round(v);
-    const p=num($("#gP",sheet).value),c=num($("#gC",sheet).value),f=num($("#gF",sheet).value);
+    const c=num($("#gC",sheet).value),p=num($("#gP",sheet).value),f=num($("#gF",sheet).value);
     state.settings.macros={p:Math.round(p||0),c:Math.round(c||0),f:Math.round(f||0)};
-    save();close();renderActive();});
+    save();close();renderActive();toast("Goals saved ✓");});
 }
+
+function openProfile(){
+  const p=state.profile||{};const u=unitLbl();
+  const wv=v=>v!=null?round1(fromKg(v)):"";
+  const sheet=document.createElement("div");sheet.className="scrim";
+  sheet.innerHTML=`<div class="sheet tall"><div class="grab"></div><h2>Your metrics &amp; goal</h2>
+    <div class="goal-row"><label>Age</label><input id="pfAge" type="number" inputmode="numeric" value="${p.age!=null?p.age:''}" placeholder="years"></div>
+    <div class="goal-row"><label>Height</label><input id="pfHt" type="number" inputmode="numeric" value="${p.heightCm!=null?p.heightCm:''}" placeholder="cm"></div>
+    <div class="goal-row"><label>Sex</label><div class="seg" id="pfSex"><button data-s="m" class="${p.sex==='m'?'on':''}">Male</button><button data-s="f" class="${p.sex==='f'?'on':''}">Female</button></div></div>
+    <div class="section-title" style="margin-top:12px">Weight goal</div>
+    <div class="goal-row"><label>Starting weight (${u})</label><input id="pfStart" type="number" inputmode="decimal" value="${wv(p.startKg)}" placeholder="${latestVal('weight').val!=null?wv(latestVal('weight').val):''}"></div>
+    <div class="goal-row"><label>Goal weight (${u})</label><input id="pfGoal" type="number" inputmode="decimal" value="${wv(p.goalKg)}" placeholder="target"></div>
+    <div class="goal-row"><label>Weekly rate (${u}/wk)</label><input id="pfRate" type="number" inputmode="decimal" value="${p.weeklyRate!=null?round1(fromKg(p.weeklyRate)):''}" placeholder="e.g. 0.5"></div>
+    <div class="goal-calc" id="pfCalc"></div>
+    <button class="btn btn-primary btn-block" id="pfSave" style="margin-top:14px">Save</button>
+    <button class="btn btn-ghost btn-block" id="pfCancel" style="margin-top:6px;color:var(--faint)">Cancel</button></div>`;
+  document.body.appendChild(sheet);const close=()=>sheet.remove();
+  sheet.addEventListener('click',e=>{if(e.target===sheet)close();});
+  let sex=p.sex||null;
+  $$('#pfSex button',sheet).forEach(b=>b.addEventListener('click',()=>{sex=b.dataset.s;$$('#pfSex button',sheet).forEach(x=>x.classList.toggle('on',x===b));calc();}));
+  const calc=()=>{
+    const st=num($("#pfStart",sheet).value),go=num($("#pfGoal",sheet).value),rt=num($("#pfRate",sheet).value);
+    let msg="";
+    if(st!=null&&go!=null){const lose=round1(st-go);
+      msg=`Goal: ${lose>0?'lose':'gain'} <b>${Math.abs(lose)} ${u}</b>`;
+      if(rt&&rt>0){const wks=Math.abs(lose)/rt;msg+=` · ~<b>${Math.ceil(wks)} weeks</b> at ${round1(rt)} ${u}/wk`;}
+      const ht=num($("#pfHt",sheet).value);if(ht){const bmi=round1(toKg(go)/((ht/100)*(ht/100)));msg+=`<br><small>Goal BMI ${bmi}</small>`;}}
+    $("#pfCalc",sheet).innerHTML=msg;};
+  ['#pfStart','#pfGoal','#pfRate','#pfHt'].forEach(s=>$(s,sheet).addEventListener('input',calc));calc();
+  $("#pfCancel",sheet).addEventListener('click',close);
+  $("#pfSave",sheet).addEventListener('click',()=>{
+    const pr=state.profile||{};
+    const age=num($("#pfAge",sheet).value),ht=num($("#pfHt",sheet).value);
+    const st=num($("#pfStart",sheet).value),go=num($("#pfGoal",sheet).value),rt=num($("#pfRate",sheet).value);
+    pr.age=age!=null?Math.round(age):undefined;pr.heightCm=ht!=null?Math.round(ht):undefined;pr.sex=sex||undefined;
+    pr.startKg=st!=null?toKg(st):undefined;pr.goalKg=go!=null?toKg(go):undefined;pr.weeklyRate=rt!=null?toKg(rt):undefined;
+    if(pr.startKg!=null&&!pr.startDate)pr.startDate=dkey(Date.now());
+    state.profile=pr;save();close();renderActive();toast("Metrics saved ✓");});
+}
+function goalCard(){
+  const g=profileGoalProgress();if(!g)return "";
+  return `<div class="card goal-card" id="goalCardTap">
+    <div class="gc-row"><div><div class="gc-k">Weight goal</div><div class="gc-main"><b class="tnum">${fmtNum(round1(fromKg(g.cur)))}</b> → ${fmtNum(round1(fromKg(g.goal)))} <small>${unitLbl()}</small></div></div>
+      <div class="gc-pct tnum">${g.pct}%</div></div>
+    <div class="gc-bar"><div class="gc-fill" style="width:${g.pct}%"></div></div>
+    <div class="gc-sub">${g.remaining>0?`${fmtNum(g.remaining)} ${unitLbl()} to go`:g.remaining<0?`${fmtNum(Math.abs(g.remaining))} ${unitLbl()} past goal 🎉`:`Goal reached 🎉`} · from ${fmtNum(round1(fromKg(g.start)))} ${unitLbl()}</div>
+  </div>`;}
 
 /* ---------- BODY ---------- */
 function renderBody(){
@@ -1614,6 +2054,8 @@ function renderBody(){
       <div class="snap"><div class="k">Deep sleep</div><div class="v tnum sleepv">${dv!=null?hm(dv):'–'}</div></div>
       <div class="snap"><div class="k">Total sleep</div><div class="v tnum sleepv">${tv!=null?hm(tv):'–'}</div></div>
     </div>
+    ${goalCard()}
+    <button class="btn btn-block" id="profileBtn" style="background:var(--surface-2);border:1px solid var(--line);font-size:14px;margin-top:4px">👤 ${state.profile&&state.profile.goalKg!=null?'Edit metrics &amp; goal':'Set up metrics &amp; weight goal'}</button>
     <div class="section-title">Log for this day</div>
     <div class="card body-card">${rows}<button class="btn btn-primary btn-block" id="bodySave" style="margin-top:4px">Save body log</button></div>
     <div class="section-title">More</div>
@@ -1628,6 +2070,8 @@ function renderBody(){
   wireDateBar(el);
   const bs=$("#bodySync",el);if(bs)bs.addEventListener('click',importHealth);
   const bds=$("#bodyDriveSync",el);if(bds)bds.addEventListener('click',syncHealth);
+  const pb=$("#profileBtn",el);if(pb)pb.addEventListener('click',openProfile);
+  const gct=$("#goalCardTap",el);if(gct)gct.addEventListener('click',openProfile);
   $("#bodySave",el).addEventListener('click',()=>{
     const k=dkey(viewDate);state.body[k]=state.body[k]||{};
     $$('input[data-bf]',el).forEach(inp=>{const f=inp.dataset.bf;const v=num(inp.value);
@@ -1773,7 +2217,7 @@ function fmtClockDay(ts){const d=new Date(ts);const today=sameDay(d,Date.now());
   return today?tm:d.toLocaleDateString(undefined,{weekday:"short"})+" "+tm;}
 function fastCard(){
   const active=!!state.fasting.start;const target=fastTarget();
-  let h,label,pct,btn,times="";
+  let h,label,pct,btn,times="",ringCls=active?"on":"";
   if(active){h=fastElapsedH();label="Fasting";pct=Math.min(100,Math.round(h/target*100));
     btn=`<button class="btn btn-block fast-end" id="fastBtn">Stop fasting</button>`;
     const startTs=state.fasting.start, endTs=startTs+target*3600000;
@@ -1782,24 +2226,55 @@ function fastCard(){
       <div class="ft-col"><span>Started</span><b>${fmtClockDay(startTs)}</b></div>
       <div class="ft-arrow">→</div>
       <div class="ft-col"><span>${reached?'Goal hit':'Ends'}</span><b class="${reached?'done':''}">${fmtClockDay(endTs)}</b></div>
-    </div>`;}
-  else{const since=hoursSince(lastFastEnd());h=since||0;label="Since last fast";pct=0;
-    btn=`<button class="btn btn-primary btn-block" id="fastBtn">Start fasting</button>`;
-    const lastEnd=lastFastEnd();
-    if(lastEnd)times=`<div class="fast-times idle"><div class="ft-col"><span>Last fast ended</span><b>${fmtClockDay(lastEnd)}</b></div></div>`;}
+    </div>`;
+    return `<div class="fast-card">
+      <div class="fast-top">
+        <button class="fast-proto" id="fastProto">${state.fasting.protocol} ▾</button>
+        <div class="fast-ring ${ringCls}" id="fastRing" style="--p:${pct}"><div class="fast-inner"><div class="fast-lbl">${label}</div><div class="fast-time" id="fastTime">${fmtHM(h)}</div></div></div>
+        <div class="fast-target">target<br>${target}h</div>
+      </div>${times}${btn}</div>`;}
+  // Not fasting now — if a fast ENDED today, show its completed summary in the ring;
+  // otherwise show time since the last fast.
+  const doneToday=fastsEndingOn(Date.now());
+  const since=hoursSince(lastFastEnd());
+  btn=`<button class="btn btn-primary btn-block" id="fastBtn">Start fasting</button>`;
+  if(doneToday.length){
+    const f=doneToday.reduce((a,b)=>(b.end-b.start)>(a.end-a.start)?b:a);
+    const fh=(f.end-f.start)/3600000;const fpct=Math.min(100,Math.round(fh/target*100));
+    times=`<div class="fast-times idle">
+      <div class="ft-col"><span>Fasted</span><b>${fmtClockDay(f.start)}</b></div>
+      <div class="ft-arrow">→</div>
+      <div class="ft-col"><span>Ended</span><b class="done">${fmtClockDay(f.end)}</b></div>
+    </div>${since!=null?`<div class="fast-since">Eating window · ${fmtHM(since)} since fast</div>`:''}`;
+    return `<div class="fast-card">
+      <div class="fast-top">
+        <button class="fast-proto" id="fastProto">${state.fasting.protocol} ▾</button>
+        <div class="fast-ring done" id="fastRing" style="--p:${fpct}"><div class="fast-inner"><div class="fast-lbl">✓ Completed</div><div class="fast-time">${fmtHM(fh)}</div></div></div>
+        <div class="fast-target">${fpct}%<br>of ${target}h</div>
+      </div>${times}${btn}</div>`;}
+  // never fasted today
+  h=since||0;pct=0;
+  const lastEnd=lastFastEnd();
+  if(lastEnd)times=`<div class="fast-times idle"><div class="ft-col"><span>Last fast ended</span><b>${fmtClockDay(lastEnd)}</b></div></div>`;
   return `<div class="fast-card">
     <div class="fast-top">
       <button class="fast-proto" id="fastProto">${state.fasting.protocol} ▾</button>
-      <div class="fast-ring ${active?'on':''}" id="fastRing" style="--p:${pct}"><div class="fast-inner"><div class="fast-lbl">${label}</div><div class="fast-time" id="fastTime">${fmtHM(h)}</div></div></div>
-      <div class="fast-target">${active?`target<br>${target}h`:`goal<br>${target}:${24-target}`}</div>
+      <div class="fast-ring" id="fastRing" style="--p:${pct}"><div class="fast-inner"><div class="fast-lbl">Since last fast</div><div class="fast-time" id="fastTime">${fmtHM(h)}</div></div></div>
+      <div class="fast-target">goal<br>${target}:${24-target}</div>
     </div>${times}${btn}</div>`;
 }
 function fastsEndingOn(date){const k=dkey(date);return (state.fasting.history||[]).filter(f=>dkey(f.end)===k);}
+function fastsOverlapping(date){const k=dkey(date);return (state.fasting.history||[]).filter(f=>dkey(f.start)===k||dkey(f.end)===k);}
 function pastFastCard(date){
-  const fs=fastsEndingOn(date);if(!fs.length)return "";
+  const fs=fastsOverlapping(date);if(!fs.length)return "";
   const f=fs.reduce((a,b)=>(b.end-b.start)>(a.end-a.start)?b:a);
-  const hrs=round1((f.end-f.start)/3600000);
-  return `<div class="fast-card past"><div class="fast-past-head"><span>Fasted this day</span><b>${fmtHM(hrs)}</b></div>
+  const hrs=(f.end-f.start)/3600000;const target=fastTarget();const pct=Math.min(100,Math.round(hrs/target*100));
+  return `<div class="fast-card">
+    <div class="fast-top">
+      <div class="fast-proto" style="visibility:hidden">${state.fasting.protocol}</div>
+      <div class="fast-ring done" style="--p:${pct}"><div class="fast-inner"><div class="fast-lbl">Fasted</div><div class="fast-time">${fmtHM(hrs)}</div></div></div>
+      <div class="fast-target">${pct}%<br>of ${target}h</div>
+    </div>
     <div class="fast-times idle">
       <div class="ft-col"><span>Started</span><b>${fmtClockDay(f.start)}</b></div>
       <div class="ft-arrow">→</div>
@@ -1829,6 +2304,26 @@ window.__ascendHealthImport=function(rows){
     if(days){state.settings.lastSync=Date.now();save();renderActive();
       if(typeof toast==="function")toast(`✓ Synced ${days} day${days>1?'s':''} from your ring`);}
     return days;
+  }catch(e){return 0;}
+};
+// Native bridge: Garmin / Health Connect exercise sessions. Replaces any session
+// already stored for the same start time so re-syncs don't duplicate.
+window.__ascendWorkoutsImport=function(list){
+  try{
+    const arr=(typeof list==="string")?JSON.parse(list):list;
+    if(!Array.isArray(arr))return 0;
+    const byStart={};
+    (state.garminWorkouts||[]).forEach(g=>{byStart[g.start]=g;});
+    let n=0;
+    arr.forEach(r=>{
+      if(!r||r.start==null||r.end==null)return;
+      byStart[r.start]={start:+r.start,end:+r.end,type:r.type||"other",
+        kcal:r.kcal!=null?+r.kcal:null,avgHr:r.avgHr!=null?+r.avgHr:null,maxHr:r.maxHr!=null?+r.maxHr:null,
+        distanceKm:r.distanceKm!=null?+r.distanceKm:null,title:r.title||null};
+      n++;});
+    state.garminWorkouts=Object.values(byStart).sort((a,b)=>a.start-b.start).slice(-400);
+    save();if(activeTab==="home")renderHome();
+    return n;
   }catch(e){return 0;}
 };
 window.__ascendIsReady=function(){return true;};
