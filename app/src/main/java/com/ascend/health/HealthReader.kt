@@ -238,7 +238,7 @@ object HealthReader {
             }
 
             var meters = 0.0
-            for (r in distRecords) if (overlaps(r.startTime, r.endTime)) meters += r.length.inMeters
+            for (r in distRecords) if (overlaps(r.startTime, r.endTime)) meters += r.distance.inMeters
 
             val o = JSONObject()
             o.put("start", sStart)
